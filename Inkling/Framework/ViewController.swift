@@ -21,6 +21,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
   
   var app: App!
   
+  var stateBroadcast: StateBroadcast!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -33,6 +35,10 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     // Load Renderer
     renderer = Renderer(metalView: metalView)
     renderer.viewRef = self
+    
+    // Load debugging
+    stateBroadcast = StateBroadcast()
+    stateBroadcast.connect()
     
     // Application logic
     app = App()
@@ -48,7 +54,14 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
   func update(){
     // Update call
     multiGestureRecognizer.update()
+    
+    // Update state on debugger
+    stateBroadcast.send("touch_data", multiGestureRecognizer.touch_data)
+    
+    //
     app.update(touches: multiGestureRecognizer.touch_data)
+    
+    
     
     // Calculate frame rate
     let dt = Date().timeIntervalSince(previousFrameTime)

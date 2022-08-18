@@ -9,19 +9,19 @@ import UIKit
 
 typealias TouchId = Int
 
-enum TouchEventType {
+enum TouchEventType: Codable {
   case Begin
   case Move
   case Predict
   case End
 }
 
-enum TouchType {
+enum TouchType: Codable {
   case Pencil
   case Finger
 }
 
-struct TouchEvent {
+struct TouchEvent: Codable {
   let id: TouchId
   let type: TouchType
   let event_type: TouchEventType
@@ -29,18 +29,14 @@ struct TouchEvent {
   let force: CGFloat?
 }
 
-struct Touches {
-  var events: [TouchEvent]
-  var active_fingers: [TouchId: CGVector]
-  var active_pencil: CGVector?
+class Touches: Codable {
+  var events: [TouchEvent] = []
+  var active_fingers: [TouchId: CGVector] = [:]
+  var active_pencil: CGVector? = nil
 }
 
 class MultiGestureRecognizer: UIGestureRecognizer {
-  var touch_data = Touches(
-    events: [],
-    active_fingers: [:],
-    active_pencil: nil
-  )
+  var touch_data = Touches()
   
   var viewRef: ViewController!
 

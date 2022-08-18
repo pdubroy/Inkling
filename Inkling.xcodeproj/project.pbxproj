@@ -19,6 +19,7 @@
 		1FB0A51C28AE7F0600D29342 /* Shader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A51B28AE7F0600D29342 /* Shader.metal */; };
 		1FB0A51E28AE7F2700D29342 /* Compute.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A51D28AE7F2700D29342 /* Compute.metal */; };
 		1FB0A52128AE7F9B00D29342 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A52028AE7F9B00D29342 /* App.swift */; };
+		1FB0A52428AE84C000D29342 /* StateBroadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A52328AE84C000D29342 /* StateBroadcast.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		1FB0A51D28AE7F2700D29342 /* Compute.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Compute.metal; sourceTree = "<group>"; };
 		1FB0A52028AE7F9B00D29342 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		1FB0A52228AE833300D29342 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		1FB0A52328AE84C000D29342 /* StateBroadcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateBroadcast.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 				1FB0A50128AE795F00D29342 /* SceneDelegate.swift */,
 				1FB0A50328AE795F00D29342 /* ViewController.swift */,
 				1FB0A51428AE7ADD00D29342 /* MultiGestureRecognizer.swift */,
+				1FB0A52328AE84C000D29342 /* StateBroadcast.swift */,
 				1FB0A51928AE7ECD00D29342 /* Renderer.swift */,
 				1FB0A51B28AE7F0600D29342 /* Shader.metal */,
 				1FB0A51D28AE7F2700D29342 /* Compute.metal */,
@@ -190,6 +193,7 @@
 				1FB0A50028AE795F00D29342 /* AppDelegate.swift in Sources */,
 				1FB0A51A28AE7ECD00D29342 /* Renderer.swift in Sources */,
 				1FB0A51C28AE7F0600D29342 /* Shader.metal in Sources */,
+				1FB0A52428AE84C000D29342 /* StateBroadcast.swift in Sources */,
 				1FB0A50228AE795F00D29342 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
