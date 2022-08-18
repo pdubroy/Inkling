@@ -13,6 +13,12 @@
 		1FB0A50728AE795F00D29342 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FB0A50528AE795F00D29342 /* Main.storyboard */; };
 		1FB0A50928AE796000D29342 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FB0A50828AE796000D29342 /* Assets.xcassets */; };
 		1FB0A50C28AE796000D29342 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FB0A50A28AE796000D29342 /* LaunchScreen.storyboard */; };
+		1FB0A51528AE7ADD00D29342 /* MultiGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A51428AE7ADD00D29342 /* MultiGestureRecognizer.swift */; };
+		1FB0A51828AE7D5800D29342 /* CGVectorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A51728AE7D5800D29342 /* CGVectorExtensions.swift */; };
+		1FB0A51A28AE7ECD00D29342 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A51928AE7ECD00D29342 /* Renderer.swift */; };
+		1FB0A51C28AE7F0600D29342 /* Shader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A51B28AE7F0600D29342 /* Shader.metal */; };
+		1FB0A51E28AE7F2700D29342 /* Compute.metal in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A51D28AE7F2700D29342 /* Compute.metal */; };
+		1FB0A52128AE7F9B00D29342 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A52028AE7F9B00D29342 /* App.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +30,13 @@
 		1FB0A50828AE796000D29342 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1FB0A50B28AE796000D29342 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1FB0A50D28AE796000D29342 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1FB0A51428AE7ADD00D29342 /* MultiGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiGestureRecognizer.swift; sourceTree = "<group>"; };
+		1FB0A51728AE7D5800D29342 /* CGVectorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGVectorExtensions.swift; sourceTree = "<group>"; };
+		1FB0A51928AE7ECD00D29342 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		1FB0A51B28AE7F0600D29342 /* Shader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shader.metal; sourceTree = "<group>"; };
+		1FB0A51D28AE7F2700D29342 /* Compute.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Compute.metal; sourceTree = "<group>"; };
+		1FB0A52028AE7F9B00D29342 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		1FB0A52228AE833300D29342 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +53,7 @@
 		1FB0A4F328AE795F00D29342 = {
 			isa = PBXGroup;
 			children = (
+				1FB0A52228AE833300D29342 /* README.md */,
 				1FB0A4FE28AE795F00D29342 /* Inkling */,
 				1FB0A4FD28AE795F00D29342 /* Products */,
 			);
@@ -56,15 +70,45 @@
 		1FB0A4FE28AE795F00D29342 /* Inkling */ = {
 			isa = PBXGroup;
 			children = (
-				1FB0A4FF28AE795F00D29342 /* AppDelegate.swift */,
-				1FB0A50128AE795F00D29342 /* SceneDelegate.swift */,
-				1FB0A50328AE795F00D29342 /* ViewController.swift */,
+				1FB0A51F28AE7F7A00D29342 /* App */,
+				1FB0A51628AE7D2C00D29342 /* Library */,
+				1FB0A51328AE7A4B00D29342 /* Framework */,
 				1FB0A50528AE795F00D29342 /* Main.storyboard */,
 				1FB0A50828AE796000D29342 /* Assets.xcassets */,
 				1FB0A50A28AE796000D29342 /* LaunchScreen.storyboard */,
 				1FB0A50D28AE796000D29342 /* Info.plist */,
 			);
 			path = Inkling;
+			sourceTree = "<group>";
+		};
+		1FB0A51328AE7A4B00D29342 /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				1FB0A4FF28AE795F00D29342 /* AppDelegate.swift */,
+				1FB0A50128AE795F00D29342 /* SceneDelegate.swift */,
+				1FB0A50328AE795F00D29342 /* ViewController.swift */,
+				1FB0A51428AE7ADD00D29342 /* MultiGestureRecognizer.swift */,
+				1FB0A51928AE7ECD00D29342 /* Renderer.swift */,
+				1FB0A51B28AE7F0600D29342 /* Shader.metal */,
+				1FB0A51D28AE7F2700D29342 /* Compute.metal */,
+			);
+			path = Framework;
+			sourceTree = "<group>";
+		};
+		1FB0A51628AE7D2C00D29342 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				1FB0A51728AE7D5800D29342 /* CGVectorExtensions.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		1FB0A51F28AE7F7A00D29342 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				1FB0A52028AE7F9B00D29342 /* App.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,8 +182,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FB0A52128AE7F9B00D29342 /* App.swift in Sources */,
 				1FB0A50428AE795F00D29342 /* ViewController.swift in Sources */,
+				1FB0A51528AE7ADD00D29342 /* MultiGestureRecognizer.swift in Sources */,
+				1FB0A51828AE7D5800D29342 /* CGVectorExtensions.swift in Sources */,
+				1FB0A51E28AE7F2700D29342 /* Compute.metal in Sources */,
 				1FB0A50028AE795F00D29342 /* AppDelegate.swift in Sources */,
+				1FB0A51A28AE7ECD00D29342 /* Renderer.swift in Sources */,
+				1FB0A51C28AE7F0600D29342 /* Shader.metal in Sources */,
 				1FB0A50228AE795F00D29342 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
