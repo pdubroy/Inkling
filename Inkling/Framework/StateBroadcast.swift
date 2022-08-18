@@ -22,7 +22,7 @@ class StateBroadcast {
         switch (newState) {
           case .ready:
             print("StateBroadcast: Ready")
-            self.send(messageToUDP)
+            //self.send(messageToUDP)
             //self.receive()
           case .setup:
             print("StateBroadcast: Setup")

@@ -54,10 +54,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
   func update(){
     // Update call
     multiGestureRecognizer.update()
-    
-    // Update state on debugger
-    stateBroadcast.send("touch_data", multiGestureRecognizer.touch_data)
-    
+        
     //
     app.update(touches: multiGestureRecognizer.touch_data)
     
@@ -69,9 +66,15 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     previousFrameTime = Date()
     debugInfo.text = "FPS: \(fps)\n"
     
+    
     // Reset drawing buffer and render app
     renderer.clearBuffer()
     app.render(renderer: renderer)
+    
+    
+    // Update state on debugger
+    //stateBroadcast.send("touch_data", multiGestureRecognizer.touch_data)
+    //stateBroadcast.send("fps", fps)
     
     // Clear touches buffer
     multiGestureRecognizer.reset_buffer()
