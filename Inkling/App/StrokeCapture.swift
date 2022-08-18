@@ -14,11 +14,13 @@ class StrokeCapture {
   var points: [CGVector] = []
   var predicted_points: [CGVector] = []
   var color: Color
+  var verts: [Vertex] = []
   
   init(){
     points = []
     predicted_points = []
     color = Color.init(0, 0, 0)
+    verts = []
   }
   
   // Process Stroke input data, Returns a new stroke once it's ready
@@ -45,10 +47,15 @@ class StrokeCapture {
   func begin_stroke(_ pos: CGVector){
     points = [pos]
     predicted_points = []
+    verts = []
+    
+    verts.append(Vertex(position: SIMD3(Float(pos.dx), Float(pos.dy), 1.0), color: color.as_simd_transparent()))
+    verts.append(Vertex(position: SIMD3(Float(pos.dx), Float(pos.dy), 1.0), color: color.as_simd()))
   }
   
   func add_point(_ pos: CGVector){
     points.append(pos)
+    verts.append(Vertex(position: SIMD3(Float(pos.dx), Float(pos.dy), 1.0), color: color.as_simd()))
   }
   
   func add_predicted_point(_ pos: CGVector){
@@ -65,22 +72,19 @@ class StrokeCapture {
   }
   
   func render(_ renderer: Renderer) {
-    let joined_points = points + predicted_points
-    
-    if joined_points.count == 0 {
+    if points.count == 0 {
       return
     }
     
-    var verts: [Vertex] = []
-    
-    let first = joined_points.first!
-    verts.append(Vertex(position: SIMD3(Float(first.dx), Float(first.dy), 1.0), color: color.as_simd_transparent()))
-    for pt in joined_points {
-      verts.append(Vertex(position: SIMD3(Float(pt.dx), Float(pt.dy), 1.0), color: color.as_simd()))
+    let predicted_verts = predicted_points.map { pt in
+      Vertex(position: SIMD3(Float(pt.dx), Float(pt.dy), 1.0), color: color.as_simd())
     }
-    let last = joined_points.last!
-    verts.append(Vertex(position: SIMD3(Float(last.dx), Float(last.dy), 1.0), color: color.as_simd_transparent()))
+     
+    var joined_verts = verts + predicted_verts
+    var last = joined_verts.last!
+    last.color[3] = Float(0.0)
+    joined_verts.append(last)
     
-    renderer.addStrokeData(verts)
+    renderer.addStrokeData(joined_verts)
   }
 }
