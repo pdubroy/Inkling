@@ -15,6 +15,7 @@ class StrokeCapture {
   var predicted_points: [CGVector] = []
   var color: Color
   var verts: [Vertex] = []
+  var active = false
   
   init(){
     points = []
@@ -24,7 +25,7 @@ class StrokeCapture {
   }
   
   // Process Stroke input data, Returns a new stroke once it's ready
-  func update(touch_events: [TouchEvent]) -> Stroke? {
+  func update(_ touch_events: [TouchEvent]) -> Stroke? {
     // Reset predicted points every frame
     predicted_points = []
     
@@ -45,6 +46,7 @@ class StrokeCapture {
   }
   
   func begin_stroke(_ pos: CGVector){
+    active = true
     points = [pos]
     predicted_points = []
     verts = []
@@ -54,21 +56,29 @@ class StrokeCapture {
   }
   
   func add_point(_ pos: CGVector){
-    points.append(pos)
-    verts.append(Vertex(position: SIMD3(Float(pos.dx), Float(pos.dy), 1.0), color: color.as_simd()))
+    if active {
+      points.append(pos)
+      verts.append(Vertex(position: SIMD3(Float(pos.dx), Float(pos.dy), 1.0), color: color.as_simd()))
+    }
   }
   
   func add_predicted_point(_ pos: CGVector){
-    predicted_points.append(pos)
+    if active {
+      predicted_points.append(pos)
+    }
   }
   
-  func end_stroke(_ pos: CGVector) -> Stroke {
-    //points.append(contentsOf: predicted_points)
-    points.append(pos)
-    let stroke = Stroke(points, color)
-    points = []
-    predicted_points = []
-    return stroke
+  func end_stroke(_ pos: CGVector) -> Stroke? {
+    if active {
+      points.append(pos)
+      let stroke = Stroke(points, color)
+      points = []
+      predicted_points = []
+      active = false
+      return stroke
+    }
+    
+    return nil
   }
   
   func render(_ renderer: Renderer) {

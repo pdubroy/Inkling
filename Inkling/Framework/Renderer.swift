@@ -7,19 +7,27 @@
 
 import MetalKit
 
+// STRUCTS
 struct Vertex {
   var position: SIMD3<Float>
   var color: SIMD4<Float>
 }
 
-struct Shape {
+struct RenderShape {
   var verts: [Vertex]
   var indices: [UInt16]
 }
 
+// CONSTANTS
 let NUMBER_OF_VERTS = 10000;
 let MSAA = 4;
 
+struct Constants {
+  var screen_width: Float = Float(UIScreen.main.bounds.width)
+  var screen_height: Float = Float(UIScreen.main.bounds.height)
+}
+
+// MAIN RENDERER CLASS
 class Renderer: NSObject {
   var viewRef: ViewController!
   
@@ -36,18 +44,14 @@ class Renderer: NSObject {
   var indexBuffer: MTLBuffer!       // Indecies for other geometry
   
   // Buffer sizes for rendering
-  var vertexBufferSize = 0;
-  var indexBufferSize = 0;
-  var pointBufferSize = 0;
+  var vertexBufferSize = 0
+  var indexBufferSize = 0
+  var pointBufferSize = 0
+  
+  // Textures
   
   // Screen size
-  struct Constants {
-    var screen_width: Float = Float(UIScreen.main.bounds.width)
-    var screen_height: Float = Float(UIScreen.main.bounds.height)
-  }
   var constants = Constants()
-  
-  var ciContext = CIContext()
   
   // Init function
   init(metalView: MTKView) {
@@ -147,7 +151,7 @@ class Renderer: NSObject {
 
   // Copy new elements into buffer
   // TODO auto grow buffer size if we overflow
-  public func addShapeData(_ shape: Shape) {
+  public func addShapeData(_ shape: RenderShape) {
     // Copy verts
     let vertexByteOffset = MemoryLayout<Vertex>.stride * vertexBufferSize
     (vertexBuffer.contents() + vertexByteOffset).copyMemory(from: shape.verts, byteCount: shape.verts.count * MemoryLayout<Vertex>.stride)

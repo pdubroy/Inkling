@@ -10,20 +10,31 @@ import UIKit
 
 class App {
   
+  var colorPicker: ColorPicker!
   var strokeCapture: StrokeCapture!
   var strokes: [Stroke]
   
   
   init() {
+    colorPicker = ColorPicker()
     strokeCapture = StrokeCapture()
     strokes = []
   }
   
   func update(touches: Touches){
-    let result = strokeCapture.update(touch_events: touches.events)
+    // Capture tap on color picker
+    let color = colorPicker.update(touches.events)
+    if let color = color {
+      strokeCapture.color = color
+      return
+    }
+    
+    // Capture strokes
+    let result = strokeCapture.update(touches.events)
     if let result = result {
       strokes.append(result)
     }
+    
   }
   
   func render(renderer: Renderer) {
@@ -32,6 +43,8 @@ class App {
     }
     
     strokeCapture.render(renderer)
+    
+    colorPicker.render(renderer)
   }
   
 }

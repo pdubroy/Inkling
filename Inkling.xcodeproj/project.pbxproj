@@ -23,6 +23,8 @@
 		1FB0A52628AE92CE00D29342 /* StrokeCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A52528AE92CE00D29342 /* StrokeCapture.swift */; };
 		1FB0A52828AE930B00D29342 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A52728AE930B00D29342 /* Color.swift */; };
 		1FB0A52A28AE932700D29342 /* Stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A52928AE932700D29342 /* Stroke.swift */; };
+		1FB0A52C28AE994C00D29342 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A52B28AE994C00D29342 /* ColorPicker.swift */; };
+		1FB0A52E28AE9E6600D29342 /* RenderShapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A52D28AE9E6600D29342 /* RenderShapes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +47,8 @@
 		1FB0A52528AE92CE00D29342 /* StrokeCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokeCapture.swift; sourceTree = "<group>"; };
 		1FB0A52728AE930B00D29342 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		1FB0A52928AE932700D29342 /* Stroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stroke.swift; sourceTree = "<group>"; };
+		1FB0A52B28AE994C00D29342 /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
+		1FB0A52D28AE9E6600D29342 /* RenderShapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderShapes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +113,7 @@
 			children = (
 				1FB0A51728AE7D5800D29342 /* CGVectorExtensions.swift */,
 				1FB0A52728AE930B00D29342 /* Color.swift */,
+				1FB0A52D28AE9E6600D29342 /* RenderShapes.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -119,6 +124,7 @@
 				1FB0A52028AE7F9B00D29342 /* App.swift */,
 				1FB0A52528AE92CE00D29342 /* StrokeCapture.swift */,
 				1FB0A52928AE932700D29342 /* Stroke.swift */,
+				1FB0A52B28AE994C00D29342 /* ColorPicker.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -195,6 +201,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FB0A52A28AE932700D29342 /* Stroke.swift in Sources */,
+				1FB0A52E28AE9E6600D29342 /* RenderShapes.swift in Sources */,
 				1FB0A52128AE7F9B00D29342 /* App.swift in Sources */,
 				1FB0A50428AE795F00D29342 /* ViewController.swift in Sources */,
 				1FB0A51528AE7ADD00D29342 /* MultiGestureRecognizer.swift in Sources */,
@@ -202,6 +209,7 @@
 				1FB0A51E28AE7F2700D29342 /* Compute.metal in Sources */,
 				1FB0A52828AE930B00D29342 /* Color.swift in Sources */,
 				1FB0A52628AE92CE00D29342 /* StrokeCapture.swift in Sources */,
+				1FB0A52C28AE994C00D29342 /* ColorPicker.swift in Sources */,
 				1FB0A50028AE795F00D29342 /* AppDelegate.swift in Sources */,
 				1FB0A51A28AE7ECD00D29342 /* Renderer.swift in Sources */,
 				1FB0A51C28AE7F0600D29342 /* Shader.metal in Sources */,
