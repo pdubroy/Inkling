@@ -23,6 +23,7 @@ struct VertexOut {
   float4 color;
 };
 
+// VERTEX SHADER
 vertex VertexOut vertex_shader(const VertexIn vertexIn [[ stage_in ]],
                                constant Constants &constants [[buffer(1)]]) {
   
@@ -38,8 +39,21 @@ vertex VertexOut vertex_shader(const VertexIn vertexIn [[ stage_in ]],
   return vertexOut;
 }
 
-fragment half4 fragment_shader(VertexOut vertexIn [[ stage_in ]]) {
-  //return half4(0.1490196078, 0.137254902, 0.1333333333, 1); // Return off black
-  return half4(vertexIn.color.r, vertexIn.color.g, vertexIn.color.b, vertexIn.color.a);
+// FRAGMENT SHADER
+//fragment half4 fragment_shader(VertexOut vertexIn [[ stage_in ]], texture2d<float> texture [[ texture (0) ]]) {
+fragment half4 fragment_shader(VertexOut vertexIn [[ stage_in ]],
+                               array<texture2d<float, access::sample>, 3> texture [[texture(0)]]) {
+  
+  // If the red color is negative then try to sample a texture instead
+  if (vertexIn.color.r < 0.0) {
+    constexpr sampler defaultSampler;
+    float2 uv = float2(vertexIn.color.b, vertexIn.color.a);
+    float4 color = texture[vertexIn.color.g].sample(defaultSampler, uv);
+    return half4(color.r, color.g, color.b, 1);
+    
+  } else {
+    
+    return half4(vertexIn.color.r, vertexIn.color.g, vertexIn.color.b, vertexIn.color.a);
+  }
 }
 

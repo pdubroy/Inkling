@@ -49,6 +49,7 @@ class Renderer: NSObject {
   var pointBufferSize = 0
   
   // Textures
+  var textures: [MTLTexture] = []
   
   // Screen size
   var constants = Constants()
@@ -64,6 +65,8 @@ class Renderer: NSObject {
     
     createBuffers()
     createPipelineState()
+    
+    loadTextures()
    
     // Default settings
     metalView.preferredFramesPerSecond = 120
@@ -138,6 +141,28 @@ class Renderer: NSObject {
     } catch let error as NSError {
       print("error: \(error.localizedDescription)")
     }
+  }
+  
+  func loadTextures(){
+    textures.append(loadTextureFile("happy-tree.png")!)
+    textures.append(loadTextureFile("gradient.png")!)
+  }
+  
+  func loadTextureFile(_ path: String) -> MTLTexture? {
+    var texture: MTLTexture? = nil
+    let textureLoader = MTKTextureLoader(device: device)
+    
+    if let textureURL = Bundle.main.url(forResource: path, withExtension: nil) {
+      do {
+        texture = try textureLoader.newTexture(URL: textureURL, options: [:])
+      } catch {
+        print("couldn't load texture")
+      }
+    } else {
+      print("couldn't load texture")
+    }
+    
+    return texture
   }
   
   
@@ -228,6 +253,14 @@ extension Renderer: MTKViewDelegate {
     
     // Draw shapes
     if indexBufferSize > 0 {
+      
+      // Load textures
+//      for (i, texture) in textures.enumerated() {
+//        commandEncoder.setFragmentTexture(texture, index: i)
+//
+    //}
+      commandEncoder.setFragmentTextures(textures, range: 0..<textures.count)
+      
       commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
       commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: indexBufferSize, indexType: .uint16, indexBuffer: indexBuffer, indexBufferOffset: 0)
     }

@@ -89,14 +89,14 @@ func rectShape(a: CGVector, b: CGVector, color: Color) -> RenderShape {
 
   let indices: [UInt16] = [
       0, 1, 2,
-      2, 3, 1
+      2, 3, 0
   ]
   
   return RenderShape (verts: verts, indices: indices)
 }
 
-func imageShape(a: CGVector, b: CGVector) -> RenderShape {
-  let texture_id = Float(0)
+func imageShape(a: CGVector, b: CGVector, texture: Int) -> RenderShape {
+  let texture_id = Float(texture)
   
   let verts = [
     Vertex(position: [Float(a.dx), Float(a.dy), 0], color: [-1.0, texture_id, 0.0, 0.0]),
@@ -108,7 +108,7 @@ func imageShape(a: CGVector, b: CGVector) -> RenderShape {
 
   let indices: [UInt16] = [
       0, 1, 2,
-      2, 3, 1
+      2, 3, 0
   ]
   
   return RenderShape (verts: verts, indices: indices)

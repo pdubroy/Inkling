@@ -25,6 +25,8 @@
 		1FB0A52A28AE932700D29342 /* Stroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A52928AE932700D29342 /* Stroke.swift */; };
 		1FB0A52C28AE994C00D29342 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A52B28AE994C00D29342 /* ColorPicker.swift */; };
 		1FB0A52E28AE9E6600D29342 /* RenderShapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A52D28AE9E6600D29342 /* RenderShapes.swift */; };
+		1FB0A53028AFDF9F00D29342 /* happy-tree.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FB0A52F28AFDBC700D29342 /* happy-tree.png */; };
+		1FB0A53228AFE17F00D29342 /* gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FB0A53128AFE17F00D29342 /* gradient.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +51,8 @@
 		1FB0A52928AE932700D29342 /* Stroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stroke.swift; sourceTree = "<group>"; };
 		1FB0A52B28AE994C00D29342 /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
 		1FB0A52D28AE9E6600D29342 /* RenderShapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderShapes.swift; sourceTree = "<group>"; };
+		1FB0A52F28AFDBC700D29342 /* happy-tree.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "happy-tree.png"; sourceTree = "<group>"; };
+		1FB0A53128AFE17F00D29342 /* gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradient.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +86,8 @@
 		1FB0A4FE28AE795F00D29342 /* Inkling */ = {
 			isa = PBXGroup;
 			children = (
+				1FB0A53128AFE17F00D29342 /* gradient.png */,
+				1FB0A52F28AFDBC700D29342 /* happy-tree.png */,
 				1FB0A51F28AE7F7A00D29342 /* App */,
 				1FB0A51628AE7D2C00D29342 /* Library */,
 				1FB0A51328AE7A4B00D29342 /* Framework */,
@@ -187,8 +193,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FB0A53028AFDF9F00D29342 /* happy-tree.png in Resources */,
 				1FB0A50C28AE796000D29342 /* LaunchScreen.storyboard in Resources */,
 				1FB0A50928AE796000D29342 /* Assets.xcassets in Resources */,
+				1FB0A53228AFE17F00D29342 /* gradient.png in Resources */,
 				1FB0A50728AE795F00D29342 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -45,6 +45,9 @@ class App {
     strokeCapture.render(renderer)
     
     colorPicker.render(renderer)
+    
+    renderer.addShapeData(imageShape(a: CGVector(dx: 100.0, dy: 100.0), b: CGVector(dx: 300.0, dy: 300.0), texture: 0))
+    renderer.addShapeData(imageShape(a: CGVector(dx: 400.0, dy: 100.0), b: CGVector(dx: 600.0, dy: 300.0), texture: 1))
   }
   
 }
