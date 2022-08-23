@@ -30,38 +30,30 @@ class ColorPicker {
     open = false
   }
   
-  func update(_ touch_events: [TouchEvent]) -> Color? {
-    var did_capture = false
+  func update(_ touches: Touches) -> Color? {
     
-    for event in touch_events {
-      if event.type == .Pencil {
-        if event.event_type == .Begin {
-          
-          // Handle Open Menu
-          if open {
-            for (i, color) in colors.enumerated() {
-              let pos = position - CGVector(dx: 0, dy: i * 50)
-              if distance(event.pos, pos) < 25 {
-                active_color = color
-                open = false
-                did_capture = true
-              }
-            }
+    if let event = touches.did(.Pencil, .Begin) {
+      // Handle Open Menu
+      if open {
+        for (i, color) in colors.enumerated() {
+          let pos = position - CGVector(dx: 0, dy: i * 50)
+          if distance(event.pos, pos) < 25 {
+            active_color = color
+            open = false
+            touches.capture(event)
+            return active_color
           }
-          // Handle closed menu
-          else {
-            if distance(event.pos, position) < 30 {
-              open = true
-              did_capture = true
-            }
-          }
+        }
+      }
+      // Handle closed menu
+      else {
+        if distance(event.pos, position) < 30 {
+          open = true
+          touches.capture(event)
         }
       }
     }
     
-    if did_capture {
-      return active_color
-    }
     return nil
   }
 

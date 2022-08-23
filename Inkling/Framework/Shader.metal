@@ -42,14 +42,14 @@ vertex VertexOut vertex_shader(const VertexIn vertexIn [[ stage_in ]],
 // FRAGMENT SHADER
 //fragment half4 fragment_shader(VertexOut vertexIn [[ stage_in ]], texture2d<float> texture [[ texture (0) ]]) {
 fragment half4 fragment_shader(VertexOut vertexIn [[ stage_in ]],
-                               array<texture2d<float, access::sample>, 3> texture [[texture(0)]]) {
+                               sampler sampler2d [[ sampler(0) ]],
+                               array<texture2d<float, access::sample>, 100> texture [[texture(0)]]) {
   
   // If the red color is negative then try to sample a texture instead
   if (vertexIn.color.r < 0.0) {
-    constexpr sampler defaultSampler;
     float2 uv = float2(vertexIn.color.b, vertexIn.color.a);
-    float4 color = texture[vertexIn.color.g].sample(defaultSampler, uv);
-    return half4(color.r, color.g, color.b, 1);
+    float4 color = texture[vertexIn.color.g].sample(sampler2d, uv);
+    return half4(color.r, color.g, color.b, color.a);
     
   } else {
     

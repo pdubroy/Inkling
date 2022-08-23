@@ -10,11 +10,16 @@ import UIKit
 
 class Stroke {
   var points: [CGVector]
+  var weights: [CGFloat]
+  
   var color: Color
   var verts: [Vertex]
   
-  init(_ points: [CGVector], _ color: Color) {
+  init(_ points: [CGVector], _ weights: [CGFloat], _ color: Color) {
+    assert(points.count == weights.count)
+    
     self.points = points
+    self.weights = weights
     self.color = color
     self.verts = []
     update_verts()
@@ -24,12 +29,14 @@ class Stroke {
     verts = []
     
     let first = points.first!
-    verts.append(Vertex(position: SIMD3(Float(first.dx), Float(first.dy), 1.0), color: color.as_simd_transparent()))
-    for pt in points {
-      verts.append(Vertex(position: SIMD3(Float(pt.dx), Float(pt.dy), 1.0), color: color.as_simd()))
+    let first_weight = weights.first!
+    verts.append(Vertex(position: SIMD3(Float(first.dx), Float(first.dy), Float(first_weight)), color: color.as_simd_transparent()))
+    for (pt, weight) in zip(points, weights) {
+      verts.append(Vertex(position: SIMD3(Float(pt.dx), Float(pt.dy), Float(weight)), color: color.as_simd()))
     }
     let last = points.last!
-    verts.append(Vertex(position: SIMD3(Float(last.dx), Float(last.dy), 1.0), color: color.as_simd_transparent()))
+    let last_weight = weights.last!
+    verts.append(Vertex(position: SIMD3(Float(last.dx), Float(last.dy), Float(last_weight)), color: color.as_simd_transparent()))
   }
   
   func render(_ renderer: Renderer) {

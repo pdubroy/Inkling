@@ -12,14 +12,20 @@ import UIKit
 
 class StrokeCapture {
   var points: [CGVector] = []
+  var weights: [CGFloat] = []
+  
   var predicted_points: [CGVector] = []
+  var predicted_weights: [CGFloat] = []
+  
   var color: Color
   var verts: [Vertex] = []
   var active = false
   
   init(){
     points = []
+    weights = []
     predicted_points = []
+    predicted_weights = []
     color = Color.init(0, 0, 0)
     verts = []
   }
@@ -34,10 +40,10 @@ class StrokeCapture {
     for event in touch_events {
       if event.type == .Pencil {
         switch event.event_type {
-          case .Begin: begin_stroke(event.pos)
-          case .Move: add_point(event.pos)
-          case .Predict: add_predicted_point(event.pos)
-          case .End: result = end_stroke(event.pos)
+        case .Begin: begin_stroke(event.pos, event.force!)
+          case .Move: add_point(event.pos, event.force!)
+          case .Predict: add_predicted_point(event.pos, event.force!)
+          case .End: result = end_stroke(event.pos, event.force!)
         }
       }
     }
@@ -45,33 +51,38 @@ class StrokeCapture {
     return result
   }
   
-  func begin_stroke(_ pos: CGVector){
+  func begin_stroke(_ pos: CGVector, _ weight: CGFloat){
     active = true
     points = [pos]
+    weights = [weight]
     predicted_points = []
+    predicted_weights = []
     verts = []
     
-    verts.append(Vertex(position: SIMD3(Float(pos.dx), Float(pos.dy), 1.0), color: color.as_simd_transparent()))
-    verts.append(Vertex(position: SIMD3(Float(pos.dx), Float(pos.dy), 1.0), color: color.as_simd()))
+    verts.append(Vertex(position: SIMD3(Float(pos.dx), Float(pos.dy), Float(weight)), color: color.as_simd_transparent()))
+    verts.append(Vertex(position: SIMD3(Float(pos.dx), Float(pos.dy), Float(weight)), color: color.as_simd()))
   }
   
-  func add_point(_ pos: CGVector){
+  func add_point(_ pos: CGVector, _ weight: CGFloat){
     if active {
       points.append(pos)
-      verts.append(Vertex(position: SIMD3(Float(pos.dx), Float(pos.dy), 1.0), color: color.as_simd()))
+      weights.append(weight)
+      verts.append(Vertex(position: SIMD3(Float(pos.dx), Float(pos.dy), Float(weight)), color: color.as_simd()))
     }
   }
   
-  func add_predicted_point(_ pos: CGVector){
+  func add_predicted_point(_ pos: CGVector, _ weight: CGFloat){
     if active {
       predicted_points.append(pos)
+      predicted_weights.append(weight)
     }
   }
   
-  func end_stroke(_ pos: CGVector) -> Stroke? {
+  func end_stroke(_ pos: CGVector, _ weight: CGFloat) -> Stroke? {
     if active {
       points.append(pos)
-      let stroke = Stroke(points, color)
+      weights.append(weight)
+      let stroke = Stroke(points, weights, color)
       points = []
       predicted_points = []
       active = false
@@ -86,8 +97,8 @@ class StrokeCapture {
       return
     }
     
-    let predicted_verts = predicted_points.map { pt in
-      Vertex(position: SIMD3(Float(pt.dx), Float(pt.dy), 1.0), color: color.as_simd())
+    let predicted_verts = zip(predicted_points, predicted_weights).map { (pt, weight) in
+      Vertex(position: SIMD3(Float(pt.dx), Float(pt.dy), Float(weight)), color: color.as_simd())
     }
      
     var joined_verts = verts + predicted_verts

@@ -33,10 +33,19 @@ class Touches: Codable {
   var events: [TouchEvent] = []
   var active_fingers: [TouchId: CGVector] = [:]
   var active_pencil: CGVector? = nil
+  
+  func did(_ type: TouchType, _ event_type: TouchEventType) -> TouchEvent? {
+    return events.first { e in e.type == type && e.event_type == event_type}
+  }
+  
+  func capture(_ event: TouchEvent) {
+    events.removeAll { e in e.type == event.type && e.event_type == event.event_type}
+  }
 }
 
 class MultiGestureRecognizer: UIGestureRecognizer {
   var touch_data = Touches()
+  var event_buffer: [TouchEvent] = []
   
   var viewRef: ViewController!
 
@@ -48,6 +57,10 @@ class MultiGestureRecognizer: UIGestureRecognizer {
   }
   
   func update() {
+    // Copy over event buffer
+    touch_data.events = event_buffer
+    event_buffer = []
+    
     for touch in touch_data.events {
       // Collect active fingers into a dictionary,
       if touch.type == .Finger {
@@ -79,9 +92,9 @@ class MultiGestureRecognizer: UIGestureRecognizer {
       let id = Int(bitPattern: Unmanaged.passUnretained(touch).toOpaque())
       
       if touch.type == .pencil {
-        touch_data.events.append(TouchEvent(id: id, type: TouchType.Pencil, event_type: TouchEventType.Begin, pos: pos, force: touch.force))
+        event_buffer.append(TouchEvent(id: id, type: TouchType.Pencil, event_type: TouchEventType.Begin, pos: pos, force: touch.force))
       } else {
-        touch_data.events.append(TouchEvent(id: id, type: TouchType.Finger, event_type: TouchEventType.Begin, pos: pos, force: nil))
+        event_buffer.append(TouchEvent(id: id, type: TouchType.Finger, event_type: TouchEventType.Begin, pos: pos, force: nil))
       }
     }
   }
@@ -94,9 +107,9 @@ class MultiGestureRecognizer: UIGestureRecognizer {
         for touch in coalesced {
           let pos = CGVector(point: touch.preciseLocation(in: view))
           if touch.type == .pencil {
-            touch_data.events.append(TouchEvent(id: id, type: TouchType.Pencil, event_type: TouchEventType.Move, pos: pos, force: touch.force))
+            event_buffer.append(TouchEvent(id: id, type: TouchType.Pencil, event_type: TouchEventType.Move, pos: pos, force: touch.force))
           } else {
-            touch_data.events.append(TouchEvent(id: id, type: TouchType.Finger, event_type: TouchEventType.Move, pos: pos, force: nil))
+            event_buffer.append(TouchEvent(id: id, type: TouchType.Finger, event_type: TouchEventType.Move, pos: pos, force: nil))
           }
         }
       }
@@ -105,9 +118,9 @@ class MultiGestureRecognizer: UIGestureRecognizer {
         for touch in predicted {
           let pos = CGVector(point: touch.preciseLocation(in: view))
           if touch.type == .pencil {
-            touch_data.events.append(TouchEvent(id: id, type: TouchType.Pencil, event_type: TouchEventType.Predict, pos: pos, force: touch.force))
+            event_buffer.append(TouchEvent(id: id, type: TouchType.Pencil, event_type: TouchEventType.Predict, pos: pos, force: touch.force))
           } else {
-            touch_data.events.append(TouchEvent(id: id, type: TouchType.Finger, event_type: TouchEventType.Predict, pos: pos, force: nil))
+            event_buffer.append(TouchEvent(id: id, type: TouchType.Finger, event_type: TouchEventType.Predict, pos: pos, force: nil))
           }
         }
       }
@@ -119,9 +132,9 @@ class MultiGestureRecognizer: UIGestureRecognizer {
       let id = Int(bitPattern: Unmanaged.passUnretained(touch).toOpaque())
       let pos = CGVector(point: touch.preciseLocation(in: view))
       if touch.type == .pencil {
-        touch_data.events.append(TouchEvent(id: id, type: TouchType.Pencil, event_type: TouchEventType.End, pos: pos, force: touch.force))
+        event_buffer.append(TouchEvent(id: id, type: TouchType.Pencil, event_type: TouchEventType.End, pos: pos, force: touch.force))
       } else {
-        touch_data.events.append(TouchEvent(id: id, type: TouchType.Finger, event_type: TouchEventType.End, pos: pos, force: nil))
+        event_buffer.append(TouchEvent(id: id, type: TouchType.Finger, event_type: TouchEventType.End, pos: pos, force: nil))
       }
     }
   }
@@ -131,9 +144,9 @@ class MultiGestureRecognizer: UIGestureRecognizer {
       let id = Int(bitPattern: Unmanaged.passUnretained(touch).toOpaque())
       let pos = CGVector(point: touch.preciseLocation(in: view))
       if touch.type == .pencil {
-        touch_data.events.append(TouchEvent(id: id, type: TouchType.Pencil, event_type: TouchEventType.End, pos: pos, force: touch.force))
+        event_buffer.append(TouchEvent(id: id, type: TouchType.Pencil, event_type: TouchEventType.End, pos: pos, force: touch.force))
       } else {
-        touch_data.events.append(TouchEvent(id: id, type: TouchType.Finger, event_type: TouchEventType.End, pos: pos, force: nil))
+        event_buffer.append(TouchEvent(id: id, type: TouchType.Finger, event_type: TouchEventType.End, pos: pos, force: nil))
       }
     }
   }

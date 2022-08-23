@@ -27,6 +27,8 @@
 		1FB0A52E28AE9E6600D29342 /* RenderShapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A52D28AE9E6600D29342 /* RenderShapes.swift */; };
 		1FB0A53028AFDF9F00D29342 /* happy-tree.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FB0A52F28AFDBC700D29342 /* happy-tree.png */; };
 		1FB0A53228AFE17F00D29342 /* gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FB0A53128AFE17F00D29342 /* gradient.png */; };
+		1FB0A53428B3ABFE00D29342 /* StrokePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A53328B3ABFE00D29342 /* StrokePoint.swift */; };
+		1FB0A53628B3D62E00D29342 /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A53528B3D62E00D29342 /* Canvas.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,8 @@
 		1FB0A52D28AE9E6600D29342 /* RenderShapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderShapes.swift; sourceTree = "<group>"; };
 		1FB0A52F28AFDBC700D29342 /* happy-tree.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "happy-tree.png"; sourceTree = "<group>"; };
 		1FB0A53128AFE17F00D29342 /* gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradient.png; sourceTree = "<group>"; };
+		1FB0A53328B3ABFE00D29342 /* StrokePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrokePoint.swift; sourceTree = "<group>"; };
+		1FB0A53528B3D62E00D29342 /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +135,8 @@
 				1FB0A52528AE92CE00D29342 /* StrokeCapture.swift */,
 				1FB0A52928AE932700D29342 /* Stroke.swift */,
 				1FB0A52B28AE994C00D29342 /* ColorPicker.swift */,
+				1FB0A53328B3ABFE00D29342 /* StrokePoint.swift */,
+				1FB0A53528B3D62E00D29342 /* Canvas.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -209,6 +215,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FB0A52A28AE932700D29342 /* Stroke.swift in Sources */,
+				1FB0A53628B3D62E00D29342 /* Canvas.swift in Sources */,
 				1FB0A52E28AE9E6600D29342 /* RenderShapes.swift in Sources */,
 				1FB0A52128AE7F9B00D29342 /* App.swift in Sources */,
 				1FB0A50428AE795F00D29342 /* ViewController.swift in Sources */,
@@ -222,6 +229,7 @@
 				1FB0A51A28AE7ECD00D29342 /* Renderer.swift in Sources */,
 				1FB0A51C28AE7F0600D29342 /* Shader.metal in Sources */,
 				1FB0A52428AE84C000D29342 /* StateBroadcast.swift in Sources */,
+				1FB0A53428B3ABFE00D29342 /* StrokePoint.swift in Sources */,
 				1FB0A50228AE795F00D29342 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

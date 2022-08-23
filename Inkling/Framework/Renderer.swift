@@ -6,6 +6,7 @@
 //
 
 import MetalKit
+import CoreImage.CIFilterBuiltins
 
 // STRUCTS
 struct Vertex {
@@ -16,6 +17,12 @@ struct Vertex {
 struct RenderShape {
   var verts: [Vertex]
   var indices: [UInt16]
+}
+
+struct RenderImage {
+  var texture_id: Int
+  var width: Int
+  var height: Int
 }
 
 // CONSTANTS
@@ -49,6 +56,7 @@ class Renderer: NSObject {
   var pointBufferSize = 0
   
   // Textures
+  var samplerState: MTLSamplerState?
   var textures: [MTLTexture] = []
   
   // Screen size
@@ -66,6 +74,7 @@ class Renderer: NSObject {
     createBuffers()
     createPipelineState()
     
+    createSamplerState()
     loadTextures()
    
     // Default settings
@@ -143,27 +152,80 @@ class Renderer: NSObject {
     }
   }
   
-  func loadTextures(){
-    textures.append(loadTextureFile("happy-tree.png")!)
-    textures.append(loadTextureFile("gradient.png")!)
+  func createSamplerState(){
+    let descriptor = MTLSamplerDescriptor()
+    descriptor.minFilter = .linear
+    descriptor.magFilter = .linear
+    samplerState = device.makeSamplerState(descriptor: descriptor)
   }
   
-  func loadTextureFile(_ path: String) -> MTLTexture? {
-    var texture: MTLTexture? = nil
+  // TEXTURE STUFF
+  func loadTextures(){
+//    textures.append(loadTextureFile("happy-tree.png")!)
+//    textures.append(loadTextTexture()!)
+  }
+  
+  func loadTextureFile(_ path: String) -> RenderImage? {
     let textureLoader = MTKTextureLoader(device: device)
     
-    if let textureURL = Bundle.main.url(forResource: path, withExtension: nil) {
+    //if let textureURL = Bundle.main.url(forResource: path, withExtension: nil) {
+    if let textureURL = URL(string: path) {
       do {
-        texture = try textureLoader.newTexture(URL: textureURL, options: [:])
+        let texture = try textureLoader.newTexture(URL: textureURL, options: [:])
+        
+        textures.append(texture)
+        return RenderImage(  texture_id: textures.count - 1,
+                             width: texture.width,
+                             height: texture.height
+        )
+          
       } catch {
         print("couldn't load texture")
       }
     } else {
+      print("couldn't load construct url")
+    }
+    
+    return nil
+    
+  }
+  
+  func loadTextTexture() -> MTLTexture? {
+    let textImage = CIFilter(name: "CITextImageGenerator", parameters: [
+        "inputText": "Hello World! \nHow are you?",
+        "inputFontName": "HelveticaNeue",
+        "inputFontSize": 40,
+        "inputScaleFactor": 2.0
+    ])!.outputImage!
+    
+    dump(textImage.extent)
+    
+    var texture: MTLTexture? = nil
+    let textureLoader = MTKTextureLoader(device: device)
+    do {
+      if let convertedImage = convertCIImageToCGImage(textImage) {
+        dump(convertedImage.bitmapInfo)
+        texture = try textureLoader.newTexture(cgImage: convertedImage, options: nil);
+      } else {
+        print("couldn't load texture")
+      }
+      
+    } catch {
       print("couldn't load texture")
     }
     
+    
     return texture
   }
+  
+  func convertCIImageToCGImage(_ inputImage: CIImage) -> CGImage? {
+      let context = CIContext(options: nil)
+      if let cgImage = context.createCGImage(inputImage, from: inputImage.extent) {
+          return cgImage
+      }
+      return nil
+  }
+  
   
   
   // API
@@ -254,13 +316,11 @@ extension Renderer: MTKViewDelegate {
     // Draw shapes
     if indexBufferSize > 0 {
       
-      // Load textures
-//      for (i, texture) in textures.enumerated() {
-//        commandEncoder.setFragmentTexture(texture, index: i)
-//
-    //}
+      // Load texture information
       commandEncoder.setFragmentTextures(textures, range: 0..<textures.count)
+      commandEncoder.setFragmentSamplerState(samplerState, index: 0)
       
+      // Load vertext buffer
       commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
       commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: indexBufferSize, indexType: .uint16, indexBuffer: indexBuffer, indexBufferOffset: 0)
     }

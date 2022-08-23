@@ -7,8 +7,11 @@
 
 import UIKit
 import MetalKit
+import MobileCoreServices
+import UniformTypeIdentifiers
 
-class ViewController: UIViewController, UIGestureRecognizerDelegate {
+
+class ViewController: UIViewController, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   var metalView: MTKView {
     return view as! MTKView
   }
@@ -18,10 +21,13 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
   
   var debugInfo: UITextView!
   var previousFrameTime: Date = Date()
+  var imagePicker: UIImagePickerController!
   
   var app: App!
   
   var stateBroadcast: StateBroadcast!
+  
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -41,7 +47,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     stateBroadcast.connect()
     
     // Application logic
-    app = App()
+    app = App(self)
     
     // Add debug view
     debugInfo = UITextView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
@@ -49,6 +55,11 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     debugInfo.font = UIFont.systemFont(ofSize:14)
     debugInfo.center = CGPoint(x: 100, y: 50);
     metalView.addSubview(debugInfo)
+    
+    
+    imagePicker = UIImagePickerController()
+    imagePicker.delegate = self
+
   }
   
   func update(){
@@ -80,6 +91,19 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     multiGestureRecognizer.reset_buffer()
   }
   
+  // File dialog stuff
+  func openImageDialog(){
+    metalView.addSubview(imagePicker.view)
+    present(imagePicker, animated: true)
+  }
+  
+  func imagePickerController(
+      _ picker: UIImagePickerController,
+      didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+  ) {
+    dismiss(animated: true, completion: nil)
+    let tempImage = info[UIImagePickerController.InfoKey.imageURL] as! NSURL
+    app.loadImage(imageUrl: tempImage.absoluteString!)
+  }
+  
 }
-
-

@@ -9,45 +9,67 @@ import Foundation
 import UIKit
 
 class App {
+  var viewRef: ViewController!
   
+  var canvas: Canvas!
   var colorPicker: ColorPicker!
   var strokeCapture: StrokeCapture!
-  var strokes: [Stroke]
+  
+  //var strokes: [Stroke]
+  var images: [RenderImage] = []
   
   
-  init() {
+  init(_ viewRef: ViewController) {
+    self.viewRef = viewRef
+    canvas = Canvas()
     colorPicker = ColorPicker()
     strokeCapture = StrokeCapture()
-    strokes = []
   }
   
   func update(touches: Touches){
-    // Capture tap on color picker
-    let color = colorPicker.update(touches.events)
-    if let color = color {
-      strokeCapture.color = color
-      return
+    
+    if touches.active_fingers.count == 5 {
+      print("open dialog")
+      viewRef.openImageDialog()
     }
     
-    // Capture strokes
-    let result = strokeCapture.update(touches.events)
-    if let result = result {
-      strokes.append(result)
+
+    /* Pencil interactions */
+    // Capture tap on color picker
+    if let color = colorPicker.update(touches) {
+      strokeCapture.color = color
+    }
+    
+    
+    // Capture dragging things on the canvas
+    
+    // Capture guides
+    
+    // Capture stroke drawing
+    if let stroke = strokeCapture.update(touches.events) {
+      canvas.add_stroke(stroke)
     }
     
   }
   
   func render(renderer: Renderer) {
-    for stroke in strokes {
-      stroke.render(renderer)
-    }
-    
+    canvas.render(renderer)
     strokeCapture.render(renderer)
-    
     colorPicker.render(renderer)
     
-    renderer.addShapeData(imageShape(a: CGVector(dx: 100.0, dy: 100.0), b: CGVector(dx: 300.0, dy: 300.0), texture: 0))
-    renderer.addShapeData(imageShape(a: CGVector(dx: 400.0, dy: 100.0), b: CGVector(dx: 600.0, dy: 300.0), texture: 1))
+    for image in images {
+      renderer.addShapeData(imageShape(a: CGVector(dx: 100.0, dy: 100.0), b: CGVector(dx: 100.0 + Double(image.width / 4), dy: 100.0 + Double(image.height / 4)), texture: image.texture_id))
+    }
+    
+    //renderer.addShapeData(imageShape(a: CGVector(dx: 400.0, dy: 100.0), b: CGVector(dx: 400.0 + (433.0 / 2.0) , dy: 100.0 + ( 94.0 / 2.0 )), texture: 99))
+  }
+  
+  func loadImage(imageUrl: String){
+    print(imageUrl)
+    if let imageId = viewRef.renderer.loadTextureFile(imageUrl) {
+      images.append(imageId)
+    }
+    
   }
   
 }
