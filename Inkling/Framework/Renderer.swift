@@ -286,7 +286,7 @@ extension Renderer: MTKViewDelegate {
     // Prepare commandBuffer
     let commandBuffer = commandQueue.makeCommandBuffer()!
     
-    // Compute Pass
+    /* Compute Pass */
     if(pointBufferSize > 2) {
       let computeCommandEncoder = commandBuffer.makeComputeCommandEncoder()!
       computeCommandEncoder.setComputePipelineState(computePipelineState)
@@ -305,25 +305,15 @@ extension Renderer: MTKViewDelegate {
     
     
     
-    // Render Pass
+    /* Render Pass */
     let commandEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor)!
     commandEncoder.setRenderPipelineState(pipelineState)
 
     commandEncoder.setVertexBytes(&constants, length: MemoryLayout<Constants>.stride, index: 1)
-    
-    // Draw calls
-    
-    // Draw shapes
-    if indexBufferSize > 0 {
-      
-      // Load texture information
-      commandEncoder.setFragmentTextures(textures, range: 0..<textures.count)
-      commandEncoder.setFragmentSamplerState(samplerState, index: 0)
-      
-      // Load vertext buffer
-      commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
-      commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: indexBufferSize, indexType: .uint16, indexBuffer: indexBuffer, indexBufferOffset: 0)
-    }
+
+    // Load texture information
+    commandEncoder.setFragmentTextures(textures, range: 0..<textures.count)
+    commandEncoder.setFragmentSamplerState(samplerState, index: 0)
     
     // Draw lines
     if pointBufferSize>2 {
@@ -331,6 +321,12 @@ extension Renderer: MTKViewDelegate {
       commandEncoder.drawPrimitives(type: MTLPrimitiveType.triangleStrip, vertexStart: 0, vertexCount: pointBufferSize*2-2)
     }
     
+    // Draw shapes
+    if indexBufferSize > 0 {
+      // Load vertext buffer
+      commandEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+      commandEncoder.drawIndexedPrimitives(type: .triangle, indexCount: indexBufferSize, indexType: .uint16, indexBuffer: indexBuffer, indexBufferOffset: 0)
+    }
     
     commandEncoder.endEncoding()
     

@@ -38,8 +38,16 @@ class Touches: Codable {
     return events.first { e in e.type == type && e.event_type == event_type}
   }
   
+  func did(_ type: TouchType, _ event_type: TouchEventType, _ id: TouchId) -> TouchEvent? {
+    return events.first { e in e.id == id && e.type == type && e.event_type == event_type}
+  }
+  
   func capture(_ event: TouchEvent) {
     events.removeAll { e in e.type == event.type && e.event_type == event.event_type}
+  }
+  
+  func moved(_ type: TouchType) -> [TouchEvent] {
+    return events.filter { event in event.type == type && (event.event_type == .Move || event.event_type == .Predict) }
   }
 }
 

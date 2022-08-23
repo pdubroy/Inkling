@@ -14,6 +14,7 @@ class App {
   var canvas: Canvas!
   var colorPicker: ColorPicker!
   var strokeCapture: StrokeCapture!
+  var pseudoMode: PseudoMode!
   
   //var strokes: [Stroke]
   var images: [RenderImage] = []
@@ -24,21 +25,30 @@ class App {
     canvas = Canvas()
     colorPicker = ColorPicker()
     strokeCapture = StrokeCapture()
+    pseudoMode = PseudoMode()
   }
   
   func update(touches: Touches){
     
-    if touches.active_fingers.count == 5 {
-      print("open dialog")
-      viewRef.openImageDialog()
-    }
+//    if touches.active_fingers.count == 5 {
+//      print("open dialog")
+//      viewRef.openImageDialog()
+//    }
     
 
+    
+    
     /* Pencil interactions */
     // Capture tap on color picker
     if let color = colorPicker.update(touches) {
       strokeCapture.color = color
     }
+    
+    pseudoMode.update(touches)
+    if pseudoMode.mode {
+      canvas.update(touches)
+    }
+    
     
     
     // Capture dragging things on the canvas
@@ -54,8 +64,14 @@ class App {
   
   func render(renderer: Renderer) {
     canvas.render(renderer)
+    
+    if pseudoMode.mode {
+      canvas.render_nodes(renderer)
+    }
+    
     strokeCapture.render(renderer)
     colorPicker.render(renderer)
+    pseudoMode.render(renderer)
     
     for image in images {
       renderer.addShapeData(imageShape(a: CGVector(dx: 100.0, dy: 100.0), b: CGVector(dx: 100.0 + Double(image.width / 4), dy: 100.0 + Double(image.height / 4)), texture: image.texture_id))
