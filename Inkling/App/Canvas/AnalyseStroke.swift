@@ -5,6 +5,7 @@
 //  Created by Marcel on 24/08/2022.
 //
 
+
 import Foundation
 import UIKit
 
@@ -15,6 +16,13 @@ struct KeyPoint {
   var tangent_upstream: CGVector
   var tangent_downstream: CGVector
 }
+
+
+// This function takes raw stroke data, and uses it to split the stroke into chunks of straight lines and curves.
+// At it's core, the algorithm tries to find "key points" using the RDP Line Simplification Algorithm
+// It then tries to find out if those points are corners, or smooth tangents
+// Segments that lie between two "pointy corners" are considered straight lines, everything else is considered a curve
+// Curves are then bezier-ified
 
 func analyseStroke(_ stroke: Stroke) -> [MorphableLine] {
   // Find key points
