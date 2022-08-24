@@ -219,3 +219,11 @@ public func scalar_projection(p:CGVector, a:CGVector, b:CGVector) -> CGVector{
 public func cross(_ a: CGVector, _ b: CGVector) -> CGFloat {
   return a.dx*b.dy - a.dy*b.dx
 }
+
+func average(_ points: [CGVector]) -> CGVector{
+  var total = CGVector()
+  for pt in points {
+    total += pt
+  }
+  return total / CGFloat(points.count)
+}

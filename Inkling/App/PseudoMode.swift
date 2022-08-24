@@ -32,7 +32,7 @@ class PseudoMode {
 //        touches.capture(event)
 //      }
       
-      if let event = touches.did(.Finger, .End, fingerId!) {
+      if let _ = touches.did(.Finger, .End, fingerId!) {
         mode = false
       }
     }
