@@ -24,7 +24,7 @@ struct KeyPoint {
 // Segments that lie between two "pointy corners" are considered straight lines, everything else is considered a curve
 // Curves are then bezier-ified
 
-func analyseStroke(_ stroke: Stroke) -> [MorphableLine] {
+func analyseStroke(_ stroke: Stroke) -> [Morphable] {
   // Find key points
   let simplified_points = SimplifyStroke(line: stroke.points, epsilon: 10.0)
   
@@ -85,10 +85,22 @@ func analyseStroke(_ stroke: Stroke) -> [MorphableLine] {
   }
   
   
-  var lines: [MorphableLine] = []
-  
+  var lines: [Morphable] = []
   for seg in straight_segments {
     lines.append(MorphableLine(stroke.segment(seg.0, seg.1)))
+  }
+  
+  for seg in curved_segments {
+    let newStroke = stroke.segment(seg.0, seg.1)
+    let fittedBezier = FitCurve(points: newStroke.points, error: 10.0)
+    
+    for controlPoints in fittedBezier {
+      let start = newStroke.points.firstIndex(of: controlPoints[0])!
+      let end = newStroke.points.firstIndex(of: controlPoints[3])!
+      
+      let bezierSegment = newStroke.segment(start, end)
+      lines.append(MorphableBezier(bezierSegment, controlPoints))
+    }
   }
   
   return lines

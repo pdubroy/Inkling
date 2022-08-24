@@ -11,13 +11,11 @@ import UIKit
 class Node {
   var position: CGVector
   
-  var line: MorphableLine
-  var node_index: Int
+  var line: Morphable
   
-  init(_ position: CGVector, _ line: MorphableLine, _ node_index: Int) {
+  init(_ position: CGVector, _ line: Morphable) {
     self.position = position
     self.line = line
-    self.node_index = node_index
   }
   
   func move(_ position: CGVector) {

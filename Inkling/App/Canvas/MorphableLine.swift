@@ -5,15 +5,15 @@
 //  Created by Marcel on 23/08/2022.
 //
 
-class MorphableLine {
+class MorphableLine: Morphable {
+  var stroke: Stroke
   var nodes: [Node]
-  let stroke: Stroke
   
   init(_ stroke: Stroke){
     self.stroke = stroke
     self.nodes = []
-    self.nodes.append(Node(self.stroke.points.first!, self, 0))
-    self.nodes.append(Node(self.stroke.points.last!, self, 1))
+    self.nodes.append(Node(self.stroke.points.first!, self))
+    self.nodes.append(Node(self.stroke.points.last!, self))
   }
   
   func move(){

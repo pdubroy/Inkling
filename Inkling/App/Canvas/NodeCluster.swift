@@ -11,7 +11,7 @@ import UIKit
 class NodeClusters {
   var clusters: [NodeCluster] = []
   
-  func addNode(_ node: Node) -> NodeCluster {
+  @discardableResult func addNode(_ node: Node) -> NodeCluster {
     // Find if there are any near-by clusters
     let cluster = NodeCluster(node)
     clusters.append(cluster)

@@ -13,7 +13,7 @@ import UIKit
 class Canvas {
   var strokes: [Stroke] = []
   //var nodes: [Node] = []
-  var lines: [MorphableLine] = []
+  var lines: [Morphable] = []
   var clusters: NodeClusters = NodeClusters()
   
   // Dragging state
@@ -25,10 +25,18 @@ class Canvas {
   
     for line in line_segments {
       lines.append(line)
-      strokes.append(line.stroke)
       
-      clusters.addNode(line.nodes[0])
-      clusters.addNode(line.nodes[1])
+      if let line = line as? MorphableLine {
+        strokes.append(line.stroke)
+        clusters.addNode(line.nodes[0])
+        clusters.addNode(line.nodes[1])
+      }
+      
+      if let bezier = line as? MorphableBezier {
+        strokes.append(bezier.stroke)
+        clusters.addNode(bezier.nodes[0])
+        clusters.addNode(bezier.nodes[1])
+      }
     }
   }
   

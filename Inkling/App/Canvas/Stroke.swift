@@ -84,6 +84,17 @@ class Stroke {
   }
   
   func segment(_ start: Int, _ end: Int) -> Stroke {
+    var end = end
+    var start = start
+    
+    if start > 0 {
+      start = start - 1
+    }
+    
+    if end < points.count - 1 {
+      end = end + 1
+    }
+    
     return Stroke(
       Array(points[start...end]),
       Array(weights[start...end]),
