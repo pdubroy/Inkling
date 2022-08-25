@@ -49,6 +49,10 @@ class Touches: Codable {
   func moved(_ type: TouchType) -> [TouchEvent] {
     return events.filter { event in event.type == type && (event.event_type == .Move || event.event_type == .Predict) }
   }
+  
+  func moved(_ type: TouchType, _ id: TouchId) -> [TouchEvent] {
+    return events.filter { event in event.id == id && event.type == type && (event.event_type == .Move || event.event_type == .Predict) }
+  }
 }
 
 class MultiGestureRecognizer: UIGestureRecognizer {

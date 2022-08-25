@@ -22,7 +22,7 @@ class NodeClusters {
   func mergeCluster(_ cluster: NodeCluster) {
     for other in clusters {
       if !(other === cluster) {
-        if distance(other.position, cluster.position) < 10.0 {
+        if distance(other.position, cluster.position) < 5.0 {
           cluster.merge(other)
           clusters.removeAll { c in c === other}
         }
@@ -46,6 +46,15 @@ class NodeClusters {
       return foundCluster
     }
     return nil
+  }
+  
+  func removeNodesWithStroke(_ stroke: Stroke){
+    for cluster in clusters {
+      cluster.nodes.removeAll(where: { n in n.line.stroke === stroke })
+      if cluster.nodes.count == 0 {
+        clusters.removeAll(where: { c in c === cluster })
+      }
+    }
   }
   
   func render(_ renderer: Renderer) {

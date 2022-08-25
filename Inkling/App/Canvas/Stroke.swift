@@ -26,7 +26,7 @@ class Stroke {
     self.lengths = []
     
     computeLengths()
-    resample()
+    updateVerts()
   }
   
   func resample(step: CGFloat = 1.0){
@@ -36,7 +36,7 @@ class Stroke {
     var resampled_weights: [CGFloat] = []
     
     var length: CGFloat = 0;
-    while length < total_length {
+    while length <= total_length {
       let (point, weight) = getPointAtLength(length)
       resampled_points.append(point)
       resampled_weights.append(weight)
@@ -90,10 +90,12 @@ class Stroke {
     if start > 0 {
       start = start - 1
     }
-    
+
     if end < points.count - 1 {
       end = end + 1
     }
+    
+    print("split ", start, end, points.count)
     
     return Stroke(
       Array(points[start...end]),
@@ -118,5 +120,44 @@ class Stroke {
   
   func render(_ renderer: Renderer) {
     renderer.addStrokeData(verts);
+  }
+  
+  func erase(_ position: CGVector) -> [Stroke]? {
+    var toBeRemoved: [Int] = []
+    for (i, point) in points.enumerated() {
+      if distance(point, position) < 10.0 {
+        toBeRemoved.append(i)
+      }
+    }
+    
+    var ranges: [(Int, Int)] = []
+    if toBeRemoved.count > 0 {
+      var range = (toBeRemoved[0], toBeRemoved[0])
+      for j in 1..<toBeRemoved.count {
+        let i = toBeRemoved[j]
+        if i == range.1 + 1 {
+          range.1 = i
+        } else {
+          ranges.append(range)
+          range = (i, i)
+        }
+      }
+      ranges.append(range)
+      dump(ranges)
+      
+      var start_pos = 0
+      var segments: [Stroke] = []
+      for range in ranges {
+        if start_pos != range.0 {
+          segments.append(segment(start_pos, range.0))
+        }
+        start_pos = range.1
+      }
+      if start_pos != points.count - 1 {
+        segments.append(segment(start_pos, points.count - 1))
+      }
+      return segments
+    }
+    return nil
   }
 }

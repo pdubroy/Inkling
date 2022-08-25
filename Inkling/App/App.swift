@@ -14,7 +14,7 @@ class App {
   var canvas: Canvas!
   var colorPicker: ColorPicker!
   var strokeCapture: StrokeCapture!
-  var pseudoMode: PseudoMode!
+  var pseudoMode: PseudoModeInput!
   
   //var strokes: [Stroke]
   var images: [RenderImage] = []
@@ -25,7 +25,7 @@ class App {
     canvas = Canvas()
     colorPicker = ColorPicker()
     strokeCapture = StrokeCapture()
-    pseudoMode = PseudoMode()
+    pseudoMode = PseudoModeInput()
   }
   
   func update(touches: Touches){
@@ -45,9 +45,7 @@ class App {
     }
     
     pseudoMode.update(touches)
-    if pseudoMode.mode {
-      canvas.update(touches)
-    }
+    canvas.update(touches, pseudoMode.mode)
     
     
     
@@ -56,8 +54,10 @@ class App {
     // Capture guides
     
     // Capture stroke drawing
-    if let stroke = strokeCapture.update(touches.events) {
-      canvas.add_stroke(stroke)
+    if pseudoMode.mode == .Default {
+      if let stroke = strokeCapture.update(touches.events) {
+        canvas.add_stroke(stroke)
+      }
     }
     
   }
@@ -65,7 +65,7 @@ class App {
   func render(renderer: Renderer) {
     canvas.render(renderer)
     
-    if pseudoMode.mode {
+    if pseudoMode.mode == .Drag {
       canvas.render_nodes(renderer)
     }
     

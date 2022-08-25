@@ -40,32 +40,50 @@ class Canvas {
     }
   }
   
-  func update(_ touches: Touches) {
-    // Pencil down
-    if let event = touches.did(.Pencil, .Begin) {
-      // Find closest node
-      if let cluster = clusters.findClosestCluster(event.pos) {
-        draggingCluster = cluster
-        touches.capture(event)
+  func update(_ touches: Touches, _ mode: PseudoMode) {
+    if mode == .Drag {
+      // Pencil down
+      if let event = touches.did(.Pencil, .Begin) {
+        // Find closest node
+        if let cluster = clusters.findClosestCluster(event.pos) {
+          draggingCluster = cluster
+          touches.capture(event)
+        }
+      }
+      
+      
+      if let draggingCluster = draggingCluster {
+        // Pencil moved
+        for event in touches.moved(.Pencil) {
+          draggingCluster.move(event.pos)
+          touches.capture(event)
+        }
+      }
+    }
+    
+    if mode == .Erase {
+      for event in touches.moved(.Pencil) {
+        for stroke in strokes {
+          if let split_strokes = stroke.erase(event.pos) {
+            clusters.removeNodesWithStroke(stroke)
+            lines.removeAll(where: { l in l.stroke === stroke })
+            strokes.removeAll(where: { s in s === stroke})
+            for s in split_strokes {
+              add_stroke(s)
+            }
+          }
+        }
       }
     }
     
     
-    if let draggingClusterUnwrapped = draggingCluster {
-      // Pencil moved
-      for event in touches.moved(.Pencil) {
-        draggingClusterUnwrapped.move(event.pos)
-        touches.capture(event)
-      }
-      
-      // Pencil up
-      if let _ = touches.did(.Pencil, .End) {
-        clusters.mergeCluster(draggingClusterUnwrapped)
+    // Pencil up
+    if let _ = touches.did(.Pencil, .End) {
+      if draggingCluster != nil {
+        clusters.mergeCluster(draggingCluster!)
         draggingCluster = nil
       }
     }
-    
-
     
   }
   
