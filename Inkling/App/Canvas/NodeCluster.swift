@@ -48,6 +48,10 @@ class NodeClusters {
     return nil
   }
   
+  func findClustersInPolygon(_ polygon: [CGVector]) -> [NodeCluster] {
+    return clusters.filter { cluster in isPointInPolygon( cluster.position, polygon) }
+  }
+  
   func removeNodesWithStroke(_ stroke: Stroke){
     for cluster in clusters {
       cluster.nodes.removeAll(where: { n in n.line.stroke === stroke })
@@ -117,7 +121,9 @@ class NodeCluster {
   }
   
   func render(_ renderer: Renderer) {
-    renderer.addShapeData(circleShape(pos: position, radius: 4.0, resolution: 8, color: Color(0, 0, 255)))
-    renderer.addShapeData(circleShape(pos: position, radius: 3.0, resolution: 8, color: Color(255, 255, 255)))
+    
+    //renderer.addShapeData(circleShape(pos: position, radius: 4.0, resolution: 8, color: Color(0,0,0,20)))
+    renderer.addShapeData(circleShape(pos: position, radius: 4.0, resolution: 8, color: Color(255, 255, 255)))
+    renderer.addShapeData(circleShape(pos: position, radius: 3.0, resolution: 8, color: Color(73, 172, 214)))
   }
 }

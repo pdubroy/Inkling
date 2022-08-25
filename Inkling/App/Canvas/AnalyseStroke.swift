@@ -92,7 +92,7 @@ func analyseStroke(_ stroke: Stroke) -> [Morphable] {
   
   for seg in curved_segments {
     let newStroke = stroke.segment(seg.0, seg.1)
-    let fittedBezier = FitCurve(points: newStroke.points, error: 10.0)
+    let fittedBezier = FitCurve(points: newStroke.points, error: 100.0)
     
     for controlPoints in fittedBezier {
       let start = newStroke.points.firstIndex(of: controlPoints[0])!

@@ -27,8 +27,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UIImagePick
   
   var stateBroadcast: StateBroadcast!
   
-  
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -49,12 +47,12 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UIImagePick
     // Application logic
     app = App(self)
     
-    // Add debug view
-    debugInfo = UITextView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
-    debugInfo.text = "FPS: 0"
-    debugInfo.font = UIFont.systemFont(ofSize:14)
-    debugInfo.center = CGPoint(x: 100, y: 50);
-    metalView.addSubview(debugInfo)
+//    // Add debug view
+//    debugInfo = UITextView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
+//    debugInfo.text = "FPS: 0"
+//    debugInfo.font = UIFont.systemFont(ofSize:14)
+//    debugInfo.center = CGPoint(x: 100, y: 50);
+//    metalView.addSubview(debugInfo)
     
     
     imagePicker = UIImagePickerController()
@@ -75,7 +73,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UIImagePick
     let dt = Date().timeIntervalSince(previousFrameTime)
     let fps = (1 / dt).rounded()
     previousFrameTime = Date()
-    debugInfo.text = "FPS: \(fps)\n"
+//    debugInfo.text = "FPS: \(fps)\n"
     
     
     // Reset drawing buffer and render app

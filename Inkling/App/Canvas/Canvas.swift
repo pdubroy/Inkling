@@ -15,6 +15,9 @@ class Canvas {
   //var nodes: [Node] = []
   var lines: [Morphable] = []
   var clusters: NodeClusters = NodeClusters()
+  var selectedClusters: [NodeCluster] = []
+  
+  var selection = Selection()
   
   // Dragging state
   var draggingCluster: NodeCluster? = nil
@@ -76,6 +79,21 @@ class Canvas {
       }
     }
     
+    if mode == .Select {
+      if let polygon = selection.update(touches) {
+        print("Clusters")
+        let foundClusters = clusters.findClustersInPolygon(polygon)
+        
+        for fc in foundClusters {
+          if selectedClusters.contains(where: {nc in nc === fc }) {
+            selectedClusters.removeAll(where: {nc in nc === fc })
+          } else {
+            selectedClusters.append(fc)
+          }
+        }
+      }
+    }
+    
     
     // Pencil up
     if let _ = touches.did(.Pencil, .End) {
@@ -87,13 +105,21 @@ class Canvas {
     
   }
   
-  func render(_ renderer: Renderer){
+  func render(_ renderer: Renderer, _ mode: PseudoMode){
     for stroke in strokes {
       stroke.render(renderer)
     }
-  }
-  
-  func render_nodes(_ renderer: Renderer) {
-    clusters.render(renderer)
+    
+    if mode == .Drag || mode == .Select {
+      clusters.render(renderer)
+    }
+    
+    if mode == .Select {
+      selection.render(renderer)
+      
+      for sc in selectedClusters {
+        renderer.addShapeData(circleShape(pos: sc.position, radius: 4.0, resolution: 8, color: Color(255, 0, 0)))
+      }
+    }
   }
 }

@@ -63,11 +63,7 @@ class App {
   }
   
   func render(renderer: Renderer) {
-    canvas.render(renderer)
-    
-    if pseudoMode.mode == .Drag {
-      canvas.render_nodes(renderer)
-    }
+    canvas.render(renderer, pseudoMode.mode)
     
     strokeCapture.render(renderer)
     colorPicker.render(renderer)
