@@ -13,6 +13,8 @@
 		1F15D00A28B6475400DAFB6E /* AnalyseStroke.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F15D00928B6475400DAFB6E /* AnalyseStroke.swift */; };
 		1F15D00C28B6560700DAFB6E /* FitCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F15D00B28B6560700DAFB6E /* FitCurve.swift */; };
 		1F15D00E28B6619200DAFB6E /* Morphable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F15D00D28B6619200DAFB6E /* Morphable.swift */; };
+		1F5F164A28B78A0D00751949 /* Eraser.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F5F164928B78A0D00751949 /* Eraser.png */; };
+		1F5F164C28B78BE200751949 /* Select.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F5F164B28B78BE200751949 /* Select.png */; };
 		1FB0A50028AE795F00D29342 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A4FF28AE795F00D29342 /* AppDelegate.swift */; };
 		1FB0A50228AE795F00D29342 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A50128AE795F00D29342 /* SceneDelegate.swift */; };
 		1FB0A50428AE795F00D29342 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A50328AE795F00D29342 /* ViewController.swift */; };
@@ -45,6 +47,8 @@
 		1F15D00928B6475400DAFB6E /* AnalyseStroke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyseStroke.swift; sourceTree = "<group>"; };
 		1F15D00B28B6560700DAFB6E /* FitCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitCurve.swift; sourceTree = "<group>"; };
 		1F15D00D28B6619200DAFB6E /* Morphable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Morphable.swift; sourceTree = "<group>"; };
+		1F5F164928B78A0D00751949 /* Eraser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Eraser.png; sourceTree = "<group>"; };
+		1F5F164B28B78BE200751949 /* Select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Select.png; sourceTree = "<group>"; };
 		1FB0A4FC28AE795F00D29342 /* Inkling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Inkling.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FB0A4FF28AE795F00D29342 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1FB0A50128AE795F00D29342 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -99,6 +103,15 @@
 			path = Canvas;
 			sourceTree = "<group>";
 		};
+		1F5F164828B78A0D00751949 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				1F5F164B28B78BE200751949 /* Select.png */,
+				1F5F164928B78A0D00751949 /* Eraser.png */,
+			);
+			path = Icons;
+			sourceTree = "<group>";
+		};
 		1FB0A4F328AE795F00D29342 = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +132,7 @@
 		1FB0A4FE28AE795F00D29342 /* Inkling */ = {
 			isa = PBXGroup;
 			children = (
+				1F5F164828B78A0D00751949 /* Icons */,
 				1FB0A51F28AE7F7A00D29342 /* App */,
 				1FB0A51628AE7D2C00D29342 /* Library */,
 				1FB0A51328AE7A4B00D29342 /* Framework */,
@@ -230,7 +244,9 @@
 			files = (
 				1FB0A50C28AE796000D29342 /* LaunchScreen.storyboard in Resources */,
 				1FB0A50928AE796000D29342 /* Assets.xcassets in Resources */,
+				1F5F164C28B78BE200751949 /* Select.png in Resources */,
 				1FB0A50728AE795F00D29342 /* Main.storyboard in Resources */,
+				1F5F164A28B78A0D00751949 /* Eraser.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

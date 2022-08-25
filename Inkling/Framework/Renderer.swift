@@ -161,14 +161,37 @@ class Renderer: NSObject {
   
   // TEXTURE STUFF
   func loadTextures(){
+    loadTextureResource("Eraser.png")
+    loadTextureResource("Select.png")
 //    textures.append(loadTextureFile("happy-tree.png")!)
 //    textures.append(loadTextTexture()!)
+  }
+  
+  func loadTextureResource(_ path: String) -> RenderImage? {
+    let textureLoader = MTKTextureLoader(device: device)
+    
+    if let textureURL = Bundle.main.url(forResource: path, withExtension: nil) {
+      do {
+        let texture = try textureLoader.newTexture(URL: textureURL, options: [:])
+        
+        textures.append(texture)
+        return RenderImage(  texture_id: textures.count - 1,
+                             width: texture.width,
+                             height: texture.height
+        )
+      } catch {
+        print("couldn't load texture")
+      }
+    } else {
+      print("couldn't load construct url")
+    }
+    
+    return nil
   }
   
   func loadTextureFile(_ path: String) -> RenderImage? {
     let textureLoader = MTKTextureLoader(device: device)
     
-    //if let textureURL = Bundle.main.url(forResource: path, withExtension: nil) {
     if let textureURL = URL(string: path) {
       do {
         let texture = try textureLoader.newTexture(URL: textureURL, options: [:])
@@ -187,7 +210,6 @@ class Renderer: NSObject {
     }
     
     return nil
-    
   }
   
   func loadTextTexture() -> MTLTexture? {
