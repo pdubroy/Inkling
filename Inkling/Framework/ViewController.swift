@@ -104,4 +104,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UIImagePick
     app.loadImage(imageUrl: tempImage.absoluteString!)
   }
   
+  // Hide statusbar
+  override var prefersStatusBarHidden: Bool {
+      return true
+  }
 }

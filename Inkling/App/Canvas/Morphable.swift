@@ -8,8 +8,6 @@
 import Foundation
 
 protocol Morphable {
-  var stroke: Stroke { get set }
-  var nodes: [Node] { get set }
-  
-  func move()
+  //var stroke: Stroke { get set }
+
 }

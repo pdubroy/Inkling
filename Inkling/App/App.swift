@@ -14,6 +14,9 @@ class App {
   var canvas: Canvas!
   var colorPicker: ColorPicker!
   var strokeCapture: StrokeCapture!
+  var selectionCapture: SelectionCaputure!
+  var selectionMode: SelectionMode?
+  
   var pseudoMode: PseudoModeInput!
   
   //var strokes: [Stroke]
@@ -22,58 +25,78 @@ class App {
   
   init(_ viewRef: ViewController) {
     self.viewRef = viewRef
+    
     canvas = Canvas()
+    
+    // Temporary state & Interactions
     colorPicker = ColorPicker()
     strokeCapture = StrokeCapture()
+    selectionCapture = SelectionCaputure()
     pseudoMode = PseudoModeInput()
   }
   
   func update(touches: Touches){
     
-//    if touches.active_fingers.count == 5 {
-//      print("open dialog")
-//      viewRef.openImageDialog()
-//    }
-    
-
-    
-    
-    /* Pencil interactions */
-    // Capture tap on color picker
+    // color picker
     if let color = colorPicker.update(touches) {
       strokeCapture.color = color
     }
     
-    pseudoMode.update(touches)
-    canvas.update(touches, pseudoMode.mode)
-    
-    
-    
-    // Capture dragging things on the canvas
-    
-    // Capture guides
-    
-    // Capture stroke drawing
-    if pseudoMode.mode == .Default {
-      if let stroke = strokeCapture.update(touches.events) {
-        canvas.add_stroke(stroke)
+    // Selection gesture
+    if selectionMode != nil {
+      if let result = selectionMode!.update(touches) {
+        switch result {
+          case .Close:
+            selectionMode = nil
+            canvas.selection = nil
+          case let .StartMorph(transform):
+            canvas.selection?.startMorph(transform)
+          case let .Morph(transform):
+            canvas.selection?.morph(transform)
+          case .Simplify:
+          canvas.selection?.simplify()
+          default: ()
+        }
       }
     }
     
+    
+    // Capture stroke drawing
+    if pseudoMode.mode == .Select {
+      if let polygon = selectionCapture.update(touches) {
+        canvas.selectPolygon(polygon)
+        selectionMode = SelectionMode()
+      }
+    }
+    
+    if pseudoMode.mode == .Default {
+      if let stroke = strokeCapture.update(touches.events) {
+        canvas.addStroke(stroke)
+      }
+    }
+    
+    pseudoMode.update(touches)
   }
   
   func render(renderer: Renderer) {
-    canvas.render(renderer, pseudoMode.mode)
+    canvas.renderElements(renderer)
+    
+    if pseudoMode.mode == .Select {
+      canvas.renderNodes(renderer)
+    }
     
     strokeCapture.render(renderer)
     colorPicker.render(renderer)
-    pseudoMode.render(renderer)
     
-    for image in images {
-      renderer.addShapeData(imageShape(a: CGVector(dx: 100.0, dy: 100.0), b: CGVector(dx: 100.0 + Double(image.width / 4), dy: 100.0 + Double(image.height / 4)), texture: image.texture_id))
+    if selectionMode == nil || selectionMode!.active == false {
+      pseudoMode.render(renderer)
     }
     
-    //renderer.addShapeData(imageShape(a: CGVector(dx: 400.0, dy: 100.0), b: CGVector(dx: 400.0 + (433.0 / 2.0) , dy: 100.0 + ( 94.0 / 2.0 )), texture: 99))
+    selectionCapture.render(renderer)
+    
+    if let selectionMode = selectionMode {
+      selectionMode.render(renderer)
+    }
   }
   
   func loadImage(imageUrl: String){
@@ -81,7 +104,6 @@ class App {
     if let imageId = viewRef.renderer.loadTextureFile(imageUrl) {
       images.append(imageId)
     }
-    
   }
   
 }

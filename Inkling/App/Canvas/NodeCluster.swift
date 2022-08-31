@@ -52,15 +52,6 @@ class NodeClusters {
     return clusters.filter { cluster in isPointInPolygon( cluster.position, polygon) }
   }
   
-  func removeNodesWithStroke(_ stroke: Stroke){
-    for cluster in clusters {
-      cluster.nodes.removeAll(where: { n in n.line.stroke === stroke })
-      if cluster.nodes.count == 0 {
-        clusters.removeAll(where: { c in c === cluster })
-      }
-    }
-  }
-  
   func render(_ renderer: Renderer) {
     for c in clusters {
       c.render(renderer)
@@ -102,7 +93,7 @@ class NodeCluster {
   
   func findClosestSubnode(_ position: CGVector) -> Node? {
     let index = findClosestLineInCollection(
-      lines: nodes.map({ n in (n.line.nodes[0].position, n.line.nodes[1].position) }),
+      lines: nodes.map({ n in (n.element.nodes[0].position, n.element.nodes[1].position) }),
       point: position,
       min_dist: 30.0
     )
@@ -121,8 +112,6 @@ class NodeCluster {
   }
   
   func render(_ renderer: Renderer) {
-    
-    //renderer.addShapeData(circleShape(pos: position, radius: 4.0, resolution: 8, color: Color(0,0,0,20)))
     renderer.addShapeData(circleShape(pos: position, radius: 4.0, resolution: 8, color: Color(255, 255, 255)))
     renderer.addShapeData(circleShape(pos: position, radius: 3.0, resolution: 8, color: Color(73, 172, 214)))
   }

@@ -10,13 +10,15 @@ import UIKit
 
 // Subsystem that captures pen movements and produces a Stroke Canvas Object
 
-class Selection {
+class SelectionCaputure {
   var points: [CGVector] = []
   var predicted_points: [CGVector] = []
-  
+    
   let color: Color
   var verts: [Vertex] = []
   var active = false
+  
+
   
   init(){
     points = []
@@ -25,7 +27,8 @@ class Selection {
     verts = []
   }
   
-  // Process Stroke input data, Returns a new stroke once it's ready
+  
+  // Process Stroke input data, Returns a new stroke once it's ready  
   func update(_ touches: Touches) -> [CGVector]? {
     // Reset predicted points every frame
     predicted_points = []
@@ -36,9 +39,9 @@ class Selection {
       if event.type == .Pencil {
         switch event.event_type {
         case .Begin: begin_stroke(event.pos, event.force!)
-          case .Move: add_point(event.pos, event.force!)
-          case .Predict: add_predicted_point(event.pos, event.force!)
-          case .End: result = end_stroke(event.pos, event.force!)
+        case .Move: add_point(event.pos, event.force!)
+        case .Predict: add_predicted_point(event.pos, event.force!)
+        case .End: result = end_stroke(event.pos, event.force!)
         }
       }
     }
@@ -85,19 +88,18 @@ class Selection {
   }
   
   func render(_ renderer: Renderer) {
-    if points.count == 0 {
-      return
+    // Render line
+    if points.count > 0 {
+      let predicted_verts = predicted_points.map { (pt) in
+        Vertex(position: SIMD3(Float(pt.dx), Float(pt.dy), Float(1.0)), color: color.as_simd())
+      }
+       
+      var joined_verts = verts + predicted_verts
+      var last = joined_verts.last!
+      last.color[3] = Float(0.0)
+      joined_verts.append(last)
+      
+      renderer.addStrokeData(joined_verts)
     }
-    
-    let predicted_verts = predicted_points.map { (pt) in
-      Vertex(position: SIMD3(Float(pt.dx), Float(pt.dy), Float(1.0)), color: color.as_simd())
-    }
-     
-    var joined_verts = verts + predicted_verts
-    var last = joined_verts.last!
-    last.color[3] = Float(0.0)
-    joined_verts.append(last)
-    
-    renderer.addStrokeData(joined_verts)
   }
 }

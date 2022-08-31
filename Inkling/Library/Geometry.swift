@@ -39,6 +39,26 @@ func findClosestLineInCollection(lines: [(CGVector, CGVector)], point: CGVector,
 }
 
 
+func isPointInTriangle(p: CGVector, a: CGVector, b: CGVector, c: CGVector) -> Bool {
+  let ab = b - a
+  let bc = c - b
+  let ca = a - c
+  
+  let ap = p - a
+  let bp = p - b
+  let cp = p - c
+  
+  let cross1 = cross(ab, ap)
+  let cross2 = cross(bc, bp)
+  let cross3 = cross(ca, cp)
+  
+  if cross1 > 0 || cross2 > 0 || cross3 > 0 {
+    return false
+  }
+  
+  return true
+}
+
 func isPointInPolygon(_ point: CGVector, _ polygon: [CGVector]) -> Bool {
   // Just like, draw a line to a point very far away, and check intersections with the polygon edges.
   // If there is an uneven number of interesections, the point is inside

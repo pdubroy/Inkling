@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MorphableBezier: Morphable {
+class CanvasBezier: CanvasElement {
   var stroke: Stroke
   var nodes: [Node]
   
@@ -24,7 +24,7 @@ class MorphableBezier: Morphable {
     self.nodes.append(Node(controlPoints[3], self))
   }
   
-  func move(){
+  func morph(){
     controlPoints[0] = nodes[0].position
     controlPoints[3] = nodes[1].position
     
@@ -40,5 +40,8 @@ class MorphableBezier: Morphable {
     stroke.points = points
     stroke.updateVerts()
   }
-
+  
+  func render(_ renderer: Renderer) {
+    stroke.render(renderer)
+  }
 }

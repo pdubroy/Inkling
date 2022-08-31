@@ -140,17 +140,17 @@ func circleShape(pos: CGVector, radius: Float, resolution: Int, color: Color) ->
   return RenderShape (verts: verts, indices: indices)
 }
 
-//func polyFillShape(points: [CGVector], color: Color) -> RenderShape {
-//  let color = color.as_simd()
-//  
-//  var verts: [Vertex] = []
-//  for p in points {
-//    verts.append(Vertex(position: SIMD3<Float>(Float(p.dx), Float(p.dy), 0), color: color))
-//  }
-//  
-//  let indices = triangulate_polygon(points).map({ i in
-//    UInt16(i)
-//  })
-//  
-//  return RenderShape (verts: verts, indices: indices)
-//}
+func polyFillShape(points: [CGVector], color: Color) -> RenderShape {
+  let color = color.as_simd()
+  
+  var verts: [Vertex] = []
+  for p in points {
+    verts.append(Vertex(position: SIMD3<Float>(Float(p.dx), Float(p.dy), 0), color: color))
+  }
+  
+  let indices = triangulatePolygon(points).map({ i in
+    UInt16(i)
+  })
+  
+  return RenderShape (verts: verts, indices: indices)
+}

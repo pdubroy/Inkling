@@ -163,6 +163,9 @@ class Renderer: NSObject {
   func loadTextures(){
     loadTextureResource("Eraser.png")
     loadTextureResource("Select.png")
+    loadTextureResource("Close.png")
+    loadTextureResource("Simplify.png")
+    loadTextureResource("Trash.png")
 //    textures.append(loadTextureFile("happy-tree.png")!)
 //    textures.append(loadTextTexture()!)
   }

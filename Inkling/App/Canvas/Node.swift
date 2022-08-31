@@ -11,20 +11,27 @@ import UIKit
 class Node {
   var position: CGVector
   
-  var line: Morphable
+  var element: CanvasElement
   
-  init(_ position: CGVector, _ line: Morphable) {
+  init(_ position: CGVector, _ element: CanvasElement) {
     self.position = position
-    self.line = line
+    self.element = element
   }
   
   func move(_ position: CGVector) {
     self.position = position
-    self.line.move()
+    self.element.morph()
   }
   
-//  func render(_ renderer: Renderer) {
-//    renderer.addShapeData(circleShape(pos: position, radius: 4.0, resolution: 8, color: Color(0, 0, 255)))
-//    renderer.addShapeData(circleShape(pos: position, radius: 3.0, resolution: 8, color: Color(255, 255, 255)))
-//  }
+  func getStroke() -> Stroke? {
+    if let e = element as? CanvasLine {
+      return e.stroke
+    }
+    
+    if let e = element as? CanvasBezier {
+      return e.stroke
+    }
+    
+    return nil
+  }
 }

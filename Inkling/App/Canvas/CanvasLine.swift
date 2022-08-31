@@ -5,7 +5,7 @@
 //  Created by Marcel on 23/08/2022.
 //
 
-class MorphableLine: Morphable {
+class CanvasLine: CanvasElement {
   var stroke: Stroke
   var nodes: [Node]
   
@@ -16,7 +16,7 @@ class MorphableLine: Morphable {
     self.nodes.append(Node(self.stroke.points.last!, self))
   }
   
-  func move(){
+  func morph(){
     let new_a = self.nodes[0].position
     let new_b = self.nodes[1].position
     
@@ -45,5 +45,9 @@ class MorphableLine: Morphable {
     }
     
     stroke.updateVerts()
+  }
+  
+  func render(_ renderer: Renderer) {
+    stroke.render(renderer)
   }
 }

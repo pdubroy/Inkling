@@ -49,6 +49,24 @@ class Stroke {
     updateVerts()
   }
   
+  func simplify(){
+    let simplified_points = SimplifyStroke(line: points, epsilon: 10.0)
+    
+    var simplified_weights: [CGFloat] = []
+    
+    for simplified_point in simplified_points {
+      // find key_point index
+      let index = points.firstIndex(where: {$0 == simplified_point})!
+      simplified_weights.append(weights[index])
+    }
+    
+    points = simplified_points
+    weights = simplified_weights
+    computeLengths()
+    resample()
+    updateVerts()
+  }
+  
   func getPointAtLength(_ length: CGFloat) -> (CGVector, CGFloat) {
     if(length <= 0) {
       return (points[0], weights[0])
