@@ -46,6 +46,10 @@ class CanvasSelection {
     }
   }
   
+//  func contains(_ cluster: NodeCluster) -> Bool {
+//    return selectedClusters.contains { c in c === cluster}
+//  }
+  
   func render(_ renderer: Renderer){
     if selectedClusters.count > 0 {
       for cluster in selectedClusters {

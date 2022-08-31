@@ -15,6 +15,8 @@ class App {
   var colorPicker: ColorPicker!
   var strokeCapture: StrokeCapture!
   var selectionCapture: SelectionCaputure!
+  
+  var draggingMode: DraggingMode?
   var selectionMode: SelectionMode?
   
   var pseudoMode: PseudoModeInput!
@@ -60,8 +62,23 @@ class App {
       }
     }
     
+    if let draggingMode = draggingMode {
+      draggingMode.update(touches)
+    }
     
-    // Capture stroke drawing
+    
+    // PseudoModes
+    pseudoMode.update(touches)
+    if pseudoMode.mode == .Drag {
+      if draggingMode == nil {
+        draggingMode = DraggingMode(canvas.clusters)
+      }
+    } else {
+      if draggingMode != nil {
+        draggingMode = nil
+      }
+    }
+    
     if pseudoMode.mode == .Select {
       if let polygon = selectionCapture.update(touches) {
         canvas.selectPolygon(polygon)
@@ -75,15 +92,11 @@ class App {
       }
     }
     
-    pseudoMode.update(touches)
+    
   }
   
   func render(renderer: Renderer) {
-    canvas.renderElements(renderer)
-    
-    if pseudoMode.mode == .Select {
-      canvas.renderNodes(renderer)
-    }
+    canvas.render(renderer, pseudoMode.mode)
     
     strokeCapture.render(renderer)
     colorPicker.render(renderer)

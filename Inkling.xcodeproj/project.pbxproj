@@ -14,6 +14,7 @@
 		1F15D00C28B6560700DAFB6E /* FitCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F15D00B28B6560700DAFB6E /* FitCurve.swift */; };
 		1F25BD6028BF82F6000ABC1C /* CanvasSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F25BD5F28BF82F6000ABC1C /* CanvasSelection.swift */; };
 		1F25BD6228BF9081000ABC1C /* SelectionMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F25BD6128BF9081000ABC1C /* SelectionMode.swift */; };
+		1F25BD6428BFA28C000ABC1C /* DraggingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F25BD6328BFA28C000ABC1C /* DraggingMode.swift */; };
 		1F5F164A28B78A0D00751949 /* Eraser.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F5F164928B78A0D00751949 /* Eraser.png */; };
 		1F5F164C28B78BE200751949 /* Select.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F5F164B28B78BE200751949 /* Select.png */; };
 		1F5F164E28B7AB8600751949 /* SelectionCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5F164D28B7AB8600751949 /* SelectionCapture.swift */; };
@@ -56,6 +57,7 @@
 		1F15D00B28B6560700DAFB6E /* FitCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitCurve.swift; sourceTree = "<group>"; };
 		1F25BD5F28BF82F6000ABC1C /* CanvasSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasSelection.swift; sourceTree = "<group>"; };
 		1F25BD6128BF9081000ABC1C /* SelectionMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionMode.swift; sourceTree = "<group>"; };
+		1F25BD6328BFA28C000ABC1C /* DraggingMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggingMode.swift; sourceTree = "<group>"; };
 		1F5F164928B78A0D00751949 /* Eraser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Eraser.png; sourceTree = "<group>"; };
 		1F5F164B28B78BE200751949 /* Select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Select.png; sourceTree = "<group>"; };
 		1F5F164D28B7AB8600751949 /* SelectionCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionCapture.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				1F5F164D28B7AB8600751949 /* SelectionCapture.swift */,
 				1FB0A52528AE92CE00D29342 /* StrokeCapture.swift */,
 				1F25BD6128BF9081000ABC1C /* SelectionMode.swift */,
+				1F25BD6328BFA28C000ABC1C /* DraggingMode.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				1FB0A50428AE795F00D29342 /* ViewController.swift in Sources */,
 				1FB0A51528AE7ADD00D29342 /* MultiGestureRecognizer.swift in Sources */,
 				1FB0A51828AE7D5800D29342 /* CGVectorExtensions.swift in Sources */,
+				1F25BD6428BFA28C000ABC1C /* DraggingMode.swift in Sources */,
 				1FB0A51E28AE7F2700D29342 /* Compute.metal in Sources */,
 				1FB0A52828AE930B00D29342 /* Color.swift in Sources */,
 				1F25BD6228BF9081000ABC1C /* SelectionMode.swift in Sources */,

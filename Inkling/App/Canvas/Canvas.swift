@@ -45,29 +45,6 @@ class Canvas {
     selection = CanvasSelection(clusters.findClustersInPolygon(polygon))
   }
   
-  
-  func update(_ touches: Touches, _ mode: PseudoMode) {
-  }
-//    if mode == .Drag {
-//      // Pencil down
-//      if let event = touches.did(.Pencil, .Begin) {
-//        // Find closest node
-//        if let cluster = clusters.findClosestCluster(event.pos) {
-//          draggingCluster = cluster
-//          touches.capture(event)
-//        }
-//      }
-//
-//
-//      if let draggingCluster = draggingCluster {
-//        // Pencil moved
-//        for event in touches.moved(.Pencil) {
-//          draggingCluster.move(event.pos)
-//          touches.capture(event)
-//        }
-//      }
-//    }
-//
 //    if mode == .Erase {
 ////      for event in touches.moved(.Pencil) {
 ////        for stroke in strokes {
@@ -109,9 +86,17 @@ class Canvas {
 //
 //  }
   
-  func renderElements(_ renderer: Renderer){
+  func render(_ renderer: Renderer, _ mode: PseudoMode){
     for element in elements {
       element.render(renderer)
+    }
+    
+    if mode == PseudoMode.Drag {
+      clusters.render(renderer)
+    }
+    
+    if mode == PseudoMode.Select {
+      clusters.renderSelection(renderer)
     }
     
     if let selection = selection {
@@ -119,13 +104,13 @@ class Canvas {
     }
   }
   
-  func renderNodes(_ renderer: Renderer) {
-    clusters.render(renderer)
-    
-    if let selection = selection {
-      selection.render(renderer)
-    }
-  }
+//  func renderNodes(_ renderer: Renderer) {
+//
+//
+//    if let selection = selection {
+//      selection.render(renderer)
+//    }
+//  }
 
   
     

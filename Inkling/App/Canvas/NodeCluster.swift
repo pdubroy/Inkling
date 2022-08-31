@@ -57,6 +57,12 @@ class NodeClusters {
       c.render(renderer)
     }
   }
+  
+  func renderSelection(_ renderer: Renderer) {
+    for c in clusters {
+      c.renderSelection(renderer)
+    }
+  }
 }
 
 class NodeCluster {
@@ -114,5 +120,10 @@ class NodeCluster {
   func render(_ renderer: Renderer) {
     renderer.addShapeData(circleShape(pos: position, radius: 4.0, resolution: 8, color: Color(255, 255, 255)))
     renderer.addShapeData(circleShape(pos: position, radius: 3.0, resolution: 8, color: Color(73, 172, 214)))
+  }
+  
+  func renderSelection(_ renderer: Renderer) {
+    renderer.addShapeData(circleShape(pos: position, radius: 4.0, resolution: 8, color: Color(73, 172, 214)))
+    renderer.addShapeData(circleShape(pos: position, radius: 3.0, resolution: 8, color: Color(255, 255, 255)))
   }
 }
