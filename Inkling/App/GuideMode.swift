@@ -172,7 +172,7 @@ class GuideMode {
       let offsetA = (controlPoints[1] - controlPoints[0]) * 1000.0
       let offsetB = (controlPoints[controlPoints.count-1] - controlPoints[controlPoints.count-2]) * 1000.0
       let curve = [controlPoints[0] - offsetA] + ChaikinCurve(points: controlPoints) + [controlPoints[controlPoints.count-1] + offsetB]
-      renderer.addShapeData(polyLineShape(points: curve, weight: 1.0, color: Color(220, 87, 87, 255)))
+      renderer.addShapeData(polyLineShape(points: curve, weight: 1.0, color: transparentRed))
     }
     
     if selected == 3 {
@@ -188,8 +188,8 @@ class GuideMode {
       renderer.addShapeData(lineShape(a: fourthPoint , b: controlPoints[2], weight: 1.0, color: transparentRed))
       renderer.addShapeData(lineShape(a: controlPoints[2] , b: controlPoints[0], weight: 1.0, color: transparentRed))
       
-      renderer.addShapeData(lineShape(a: controlPoints[0] , b: fourthPoint, weight: 1.0, color: transparentRed))
-      renderer.addShapeData(lineShape(a: controlPoints[1] , b: controlPoints[2], weight: 1.0, color: transparentRed))
+      //renderer.addShapeData(lineShape(a: controlPoints[0] , b: fourthPoint, weight: 1.0, color: transparentRed))
+      //renderer.addShapeData(lineShape(a: controlPoints[1] , b: controlPoints[2], weight: 1.0, color: transparentRed))
     }
   }
 }

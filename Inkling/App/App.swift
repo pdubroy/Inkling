@@ -88,7 +88,7 @@ class App {
     pseudoMode.update(touches)
     if pseudoMode.mode == .Drag {
       if draggingMode == nil {
-        draggingMode = DraggingMode(canvas.clusters)
+        draggingMode = DraggingMode(canvas.clusters, canvas.handles)
       }
     } else {
       if draggingMode != nil {

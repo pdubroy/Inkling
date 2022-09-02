@@ -12,6 +12,7 @@ import UIKit
 class CanvasBezier: CanvasElement {
   var stroke: Stroke
   var nodes: [Node]
+  var handles: [BezierNode]
   
   var controlPoints: [CGVector]
   
@@ -20,13 +21,21 @@ class CanvasBezier: CanvasElement {
     self.controlPoints = controlPoints
     
     self.nodes = []
+    self.handles = []
+    
     self.nodes.append(Node(controlPoints[0], self))
     self.nodes.append(Node(controlPoints[3], self))
+    
+    self.handles.append(BezierNode(controlPoints[1], self.nodes[0], self))
+    self.handles.append(BezierNode(controlPoints[2], self.nodes[1], self))
   }
   
   func morph(){
     controlPoints[0] = nodes[0].position
     controlPoints[3] = nodes[1].position
+    
+    controlPoints[1] = nodes[0].position + handles[0].position
+    controlPoints[2] = nodes[1].position + handles[1].position
     
     var points: [CGVector] = []
     let size = stroke.points.count

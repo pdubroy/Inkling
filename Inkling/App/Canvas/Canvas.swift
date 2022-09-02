@@ -14,6 +14,7 @@ import UIKit
 class Canvas {
   var elements: [CanvasElement] = []
   var clusters: NodeClusters = NodeClusters()
+  var handles: [BezierNode] = []
   var selection: CanvasSelection? = nil
   
   func addStroke(_ stroke: Stroke) {
@@ -33,6 +34,10 @@ class Canvas {
     
     for node in element.nodes {
       clusters.addNode(node)
+    }
+    
+    if let element = element as? CanvasBezier {
+      handles.append(contentsOf: element.handles)
     }
   }
   
@@ -92,6 +97,10 @@ class Canvas {
     }
     
     if mode == PseudoMode.Drag {
+      for handle in handles {
+        handle.render(renderer)
+      }
+      
       clusters.render(renderer)
     }
     
