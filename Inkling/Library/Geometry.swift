@@ -164,3 +164,42 @@ func ScalarProjection(p:CGVector, a:CGVector, b:CGVector) -> CGVector{
   let f = ab * dot(ap, ab)
   return a + f
 }
+
+func ClosestPointOnCircle(p: CGVector, center: CGVector, radius: CGFloat) -> CGVector {
+  let v = (p - center)
+  return center + v / v.length() * radius
+}
+
+
+func ClosestPointOnPolyline(line: [CGVector], point: CGVector, min_dist: CGFloat = 100) -> CGVector? {
+  var closest_distance = min_dist
+  var closest_point: CGVector? = nil
+  
+  for i in 0..<line.count-1 {
+    let a = line[i]
+    let b = line[i+1]
+    
+    let c = ClosestPointOnLineSegment(point, a, b)
+    let d = distance(point, c)
+    if d < closest_distance {
+      closest_distance = d
+      closest_point = c
+    }
+  }
+  
+  return closest_point
+}
+
+func ClosestPointOnLineSegment(_ p: CGVector, _ a: CGVector, _ b: CGVector) -> CGVector {
+  let atob = b - a
+  let atop = p - a
+  
+  let len = atob.dx * atob.dx + atob.dy * atob.dy
+  var dot = atop.dx * atob.dx + atop.dy * atob.dy
+  
+  let t = min( 1, max( 0, dot / len ) )
+
+  dot = ( b.dx - a.dx ) * ( p.dy - a.dy ) - ( b.dy - a.dy ) * ( p.dx - a.dx )
+    
+  return CGVector(dx: a.dx + atob.dx * t,  dy: a.dy + atob.dy * t)
+}

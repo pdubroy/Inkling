@@ -15,6 +15,16 @@
 		1F25BD6028BF82F6000ABC1C /* CanvasSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F25BD5F28BF82F6000ABC1C /* CanvasSelection.swift */; };
 		1F25BD6228BF9081000ABC1C /* SelectionMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F25BD6128BF9081000ABC1C /* SelectionMode.swift */; };
 		1F25BD6428BFA28C000ABC1C /* DraggingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F25BD6328BFA28C000ABC1C /* DraggingMode.swift */; };
+		1F25BD6628BFA8EE000ABC1C /* GuideMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F25BD6528BFA8EE000ABC1C /* GuideMode.swift */; };
+		1F25BD6828BFADAD000ABC1C /* GuideModeCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F25BD6728BFADAD000ABC1C /* GuideModeCapture.swift */; };
+		1F25BD6D28BFB30D000ABC1C /* Square.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F25BD6928BFB30C000ABC1C /* Square.png */; };
+		1F25BD6E28BFB30D000ABC1C /* Curve.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F25BD6A28BFB30D000ABC1C /* Curve.png */; };
+		1F25BD6F28BFB30D000ABC1C /* Circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F25BD6B28BFB30D000ABC1C /* Circle.png */; };
+		1F25BD7028BFB30D000ABC1C /* Line.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F25BD6C28BFB30D000ABC1C /* Line.png */; };
+		1F25BD7528BFB94A000ABC1C /* Square_Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F25BD7128BFB94A000ABC1C /* Square_Selected.png */; };
+		1F25BD7628BFB94A000ABC1C /* Line_Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F25BD7228BFB94A000ABC1C /* Line_Selected.png */; };
+		1F25BD7728BFB94A000ABC1C /* Circle_Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F25BD7328BFB94A000ABC1C /* Circle_Selected.png */; };
+		1F25BD7828BFB94A000ABC1C /* Curve_Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F25BD7428BFB94A000ABC1C /* Curve_Selected.png */; };
 		1F5F164A28B78A0D00751949 /* Eraser.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F5F164928B78A0D00751949 /* Eraser.png */; };
 		1F5F164C28B78BE200751949 /* Select.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F5F164B28B78BE200751949 /* Select.png */; };
 		1F5F164E28B7AB8600751949 /* SelectionCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5F164D28B7AB8600751949 /* SelectionCapture.swift */; };
@@ -41,6 +51,7 @@
 		1FB0A53E28B4F97F00D29342 /* PseudoMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A53D28B4F97F00D29342 /* PseudoMode.swift */; };
 		1FB0A54028B506B500D29342 /* CanvasLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A53F28B506B500D29342 /* CanvasLine.swift */; };
 		1FB0A54228B55DAB00D29342 /* TransformMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A54128B55DAB00D29342 /* TransformMatrix.swift */; };
+		1FE3848928C20FC000933658 /* ChaikinCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE3848828C20FC000933658 /* ChaikinCurve.swift */; };
 		1FF9565A28BD09F7000FAD4B /* Close.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF9565728BD09F7000FAD4B /* Close.png */; };
 		1FF9565B28BD09F7000FAD4B /* Trash.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF9565828BD09F7000FAD4B /* Trash.png */; };
 		1FF9565C28BD09F7000FAD4B /* Simplify.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FF9565928BD09F7000FAD4B /* Simplify.png */; };
@@ -58,6 +69,16 @@
 		1F25BD5F28BF82F6000ABC1C /* CanvasSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasSelection.swift; sourceTree = "<group>"; };
 		1F25BD6128BF9081000ABC1C /* SelectionMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionMode.swift; sourceTree = "<group>"; };
 		1F25BD6328BFA28C000ABC1C /* DraggingMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggingMode.swift; sourceTree = "<group>"; };
+		1F25BD6528BFA8EE000ABC1C /* GuideMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideMode.swift; sourceTree = "<group>"; };
+		1F25BD6728BFADAD000ABC1C /* GuideModeCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideModeCapture.swift; sourceTree = "<group>"; };
+		1F25BD6928BFB30C000ABC1C /* Square.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Square.png; sourceTree = "<group>"; };
+		1F25BD6A28BFB30D000ABC1C /* Curve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Curve.png; sourceTree = "<group>"; };
+		1F25BD6B28BFB30D000ABC1C /* Circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Circle.png; sourceTree = "<group>"; };
+		1F25BD6C28BFB30D000ABC1C /* Line.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Line.png; sourceTree = "<group>"; };
+		1F25BD7128BFB94A000ABC1C /* Square_Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Square_Selected.png; sourceTree = "<group>"; };
+		1F25BD7228BFB94A000ABC1C /* Line_Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Line_Selected.png; sourceTree = "<group>"; };
+		1F25BD7328BFB94A000ABC1C /* Circle_Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Circle_Selected.png; sourceTree = "<group>"; };
+		1F25BD7428BFB94A000ABC1C /* Curve_Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Curve_Selected.png; sourceTree = "<group>"; };
 		1F5F164928B78A0D00751949 /* Eraser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Eraser.png; sourceTree = "<group>"; };
 		1F5F164B28B78BE200751949 /* Select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Select.png; sourceTree = "<group>"; };
 		1F5F164D28B7AB8600751949 /* SelectionCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionCapture.swift; sourceTree = "<group>"; };
@@ -87,6 +108,7 @@
 		1FB0A53D28B4F97F00D29342 /* PseudoMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PseudoMode.swift; sourceTree = "<group>"; };
 		1FB0A53F28B506B500D29342 /* CanvasLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasLine.swift; sourceTree = "<group>"; };
 		1FB0A54128B55DAB00D29342 /* TransformMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransformMatrix.swift; sourceTree = "<group>"; };
+		1FE3848828C20FC000933658 /* ChaikinCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaikinCurve.swift; sourceTree = "<group>"; };
 		1FF9565728BD09F7000FAD4B /* Close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Close.png; sourceTree = "<group>"; };
 		1FF9565828BD09F7000FAD4B /* Trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Trash.png; sourceTree = "<group>"; };
 		1FF9565928BD09F7000FAD4B /* Simplify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Simplify.png; sourceTree = "<group>"; };
@@ -126,6 +148,14 @@
 		1F5F164828B78A0D00751949 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				1F25BD7328BFB94A000ABC1C /* Circle_Selected.png */,
+				1F25BD7428BFB94A000ABC1C /* Curve_Selected.png */,
+				1F25BD7228BFB94A000ABC1C /* Line_Selected.png */,
+				1F25BD7128BFB94A000ABC1C /* Square_Selected.png */,
+				1F25BD6B28BFB30D000ABC1C /* Circle.png */,
+				1F25BD6A28BFB30D000ABC1C /* Curve.png */,
+				1F25BD6C28BFB30D000ABC1C /* Line.png */,
+				1F25BD6928BFB30C000ABC1C /* Square.png */,
 				1FF9565728BD09F7000FAD4B /* Close.png */,
 				1FF9565928BD09F7000FAD4B /* Simplify.png */,
 				1FF9565828BD09F7000FAD4B /* Trash.png */,
@@ -192,6 +222,7 @@
 				1FB0A54128B55DAB00D29342 /* TransformMatrix.swift */,
 				1F15D00B28B6560700DAFB6E /* FitCurve.swift */,
 				1FF9565D28BE58B6000FAD4B /* TriangulatePolygon.swift */,
+				1FE3848828C20FC000933658 /* ChaikinCurve.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -207,6 +238,8 @@
 				1FB0A52528AE92CE00D29342 /* StrokeCapture.swift */,
 				1F25BD6128BF9081000ABC1C /* SelectionMode.swift */,
 				1F25BD6328BFA28C000ABC1C /* DraggingMode.swift */,
+				1F25BD6528BFA8EE000ABC1C /* GuideMode.swift */,
+				1F25BD6728BFADAD000ABC1C /* GuideModeCapture.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -270,13 +303,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FF9565B28BD09F7000FAD4B /* Trash.png in Resources */,
+				1F25BD6D28BFB30D000ABC1C /* Square.png in Resources */,
+				1F25BD7828BFB94A000ABC1C /* Curve_Selected.png in Resources */,
 				1FB0A50C28AE796000D29342 /* LaunchScreen.storyboard in Resources */,
+				1F25BD7028BFB30D000ABC1C /* Line.png in Resources */,
+				1F25BD7528BFB94A000ABC1C /* Square_Selected.png in Resources */,
 				1FB0A50928AE796000D29342 /* Assets.xcassets in Resources */,
 				1F5F164C28B78BE200751949 /* Select.png in Resources */,
+				1F25BD6E28BFB30D000ABC1C /* Curve.png in Resources */,
 				1FB0A50728AE795F00D29342 /* Main.storyboard in Resources */,
 				1FF9565A28BD09F7000FAD4B /* Close.png in Resources */,
+				1F25BD7628BFB94A000ABC1C /* Line_Selected.png in Resources */,
 				1F5F164A28B78A0D00751949 /* Eraser.png in Resources */,
+				1F25BD7728BFB94A000ABC1C /* Circle_Selected.png in Resources */,
 				1FF9565C28BD09F7000FAD4B /* Simplify.png in Resources */,
+				1F25BD6F28BFB30D000ABC1C /* Circle.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +330,7 @@
 			files = (
 				1FB0A53C28B4F67F00D29342 /* Geometry.swift in Sources */,
 				1FB0A52A28AE932700D29342 /* Stroke.swift in Sources */,
+				1F25BD6828BFADAD000ABC1C /* GuideModeCapture.swift in Sources */,
 				1FB0A53E28B4F97F00D29342 /* PseudoMode.swift in Sources */,
 				1FF9565E28BE58B6000FAD4B /* TriangulatePolygon.swift in Sources */,
 				1F15D00628B6470300DAFB6E /* Node.swift in Sources */,
@@ -300,11 +342,13 @@
 				1FB0A51528AE7ADD00D29342 /* MultiGestureRecognizer.swift in Sources */,
 				1FB0A51828AE7D5800D29342 /* CGVectorExtensions.swift in Sources */,
 				1F25BD6428BFA28C000ABC1C /* DraggingMode.swift in Sources */,
+				1F25BD6628BFA8EE000ABC1C /* GuideMode.swift in Sources */,
 				1FB0A51E28AE7F2700D29342 /* Compute.metal in Sources */,
 				1FB0A52828AE930B00D29342 /* Color.swift in Sources */,
 				1F25BD6228BF9081000ABC1C /* SelectionMode.swift in Sources */,
 				1FB0A54028B506B500D29342 /* CanvasLine.swift in Sources */,
 				1FB0A52628AE92CE00D29342 /* StrokeCapture.swift in Sources */,
+				1FE3848928C20FC000933658 /* ChaikinCurve.swift in Sources */,
 				1F25BD6028BF82F6000ABC1C /* CanvasSelection.swift in Sources */,
 				1F15D00428B6443C00DAFB6E /* NodeCluster.swift in Sources */,
 				1FB0A52C28AE994C00D29342 /* ColorPicker.swift in Sources */,

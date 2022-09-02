@@ -25,7 +25,7 @@ struct TouchEvent: Codable {
   let id: TouchId
   let type: TouchType
   let event_type: TouchEventType
-  let pos: CGVector
+  var pos: CGVector
   let force: CGFloat?
 }
 
@@ -52,6 +52,11 @@ class Touches: Codable {
   
   func moved(_ type: TouchType, _ id: TouchId) -> [TouchEvent] {
     return events.filter { event in event.id == id && event.type == type && (event.event_type == .Move || event.event_type == .Predict) }
+  }
+  
+  func overridePosition(_ event: TouchEvent, _ pos: CGVector) {
+    let index = events.firstIndex { e in e.id == event.id && e.type == event.type && e.event_type == event.event_type }!
+    events[index].pos = pos
   }
 }
 

@@ -62,10 +62,12 @@ class Renderer: NSObject {
   // Screen size
   var constants = Constants()
   
+  
   // Init function
   init(metalView: MTKView) {
     super.init()
     
+    print(constants)
     device = MTLCreateSystemDefaultDevice()
     commandQueue = device.makeCommandQueue()
     metalView.device = device
@@ -161,11 +163,23 @@ class Renderer: NSObject {
   
   // TEXTURE STUFF
   func loadTextures(){
-    loadTextureResource("Eraser.png")
-    loadTextureResource("Select.png")
-    loadTextureResource("Close.png")
-    loadTextureResource("Simplify.png")
-    loadTextureResource("Trash.png")
+    loadTextureResource("Eraser.png") // 0
+    loadTextureResource("Select.png") // 1
+    
+    loadTextureResource("Close.png") // 2
+    loadTextureResource("Simplify.png") // 3
+    loadTextureResource("Trash.png") // 4
+    
+    loadTextureResource("Line.png") // 5
+    loadTextureResource("Curve.png") // 6
+    loadTextureResource("Circle.png") // 7
+    loadTextureResource("Square.png") // 8
+    
+    loadTextureResource("Line_Selected.png") // 9
+    loadTextureResource("Curve_Selected.png") // 10
+    loadTextureResource("Circle_Selected.png") // 11
+    loadTextureResource("Square_Selected.png") // 12
+    
 //    textures.append(loadTextureFile("happy-tree.png")!)
 //    textures.append(loadTextTexture()!)
   }

@@ -13,11 +13,14 @@ class App {
   
   var canvas: Canvas!
   var colorPicker: ColorPicker!
+  
   var strokeCapture: StrokeCapture!
   var selectionCapture: SelectionCaputure!
+  var guideModeCapture: GuideModeCapture!
   
   var draggingMode: DraggingMode?
   var selectionMode: SelectionMode?
+  var guideMode: GuideMode?
   
   var pseudoMode: PseudoModeInput!
   
@@ -29,11 +32,12 @@ class App {
     self.viewRef = viewRef
     
     canvas = Canvas()
-    
-    // Temporary state & Interactions
     colorPicker = ColorPicker()
+    
     strokeCapture = StrokeCapture()
     selectionCapture = SelectionCaputure()
+    guideModeCapture = GuideModeCapture()
+    
     pseudoMode = PseudoModeInput()
   }
   
@@ -62,8 +66,21 @@ class App {
       }
     }
     
+    // Dragging mode
     if let draggingMode = draggingMode {
       draggingMode.update(touches)
+    }
+    
+    // Guide gesture
+    if guideMode == nil, let (positions, touches) = guideModeCapture.update(touches) {
+      guideMode = GuideMode(positions, touches)
+    }
+    
+    // Guide mode
+    if guideMode != nil {
+      if guideMode!.update(touches) {
+        guideMode = nil
+      }
     }
     
     
@@ -96,6 +113,10 @@ class App {
   }
   
   func render(renderer: Renderer) {
+    if let guideMode = guideMode {
+      guideMode.render(renderer)
+    }
+    
     canvas.render(renderer, pseudoMode.mode)
     
     strokeCapture.render(renderer)
@@ -106,10 +127,11 @@ class App {
     }
     
     selectionCapture.render(renderer)
-    
     if let selectionMode = selectionMode {
       selectionMode.render(renderer)
     }
+    
+
   }
   
   func loadImage(imageUrl: String){

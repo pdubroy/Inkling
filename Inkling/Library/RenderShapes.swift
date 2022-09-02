@@ -140,6 +140,42 @@ func circleShape(pos: CGVector, radius: Float, resolution: Int, color: Color) ->
   return RenderShape (verts: verts, indices: indices)
 }
 
+// This can no doubt be done faster, but i'm lazy today
+func circleLineShape(pos: CGVector, radius: Float, resolution: Int, width: Float, color: Color) -> RenderShape {
+  let color = color.as_simd()
+  let x = Float(pos.dx)
+  let y = Float(pos.dy)
+  
+  let circleFactor = (Float.pi*2)/Float(resolution)
+  let hWidth = width;
+  
+  var verts: [Vertex] = []
+  for i in 0...resolution {
+    let fi = Float(i)
+    verts.append(Vertex(position: SIMD3<Float>(x + cos(fi*circleFactor) * (radius - hWidth), y + sin(fi*circleFactor) * (radius - hWidth), 0), color: color))
+    verts.append(Vertex(position: SIMD3<Float>(x + cos(fi*circleFactor) * (radius + hWidth), y + sin(fi*circleFactor) * (radius + hWidth), 0), color: color))
+  }
+  
+  var indices: [UInt16] = []
+  var indexOffset: UInt16 = 0
+  for _ in 0..<resolution {
+    indices += [
+      indexOffset+0, indexOffset+1, indexOffset+2,
+      indexOffset+2, indexOffset+3, indexOffset+1
+    ]
+
+    indexOffset += 2
+  }
+  
+//  indices += [
+//    indexOffset+0, indexOffset+1, indexOffset+2,
+//    indexOffset+2, 1, 0
+//  ]
+
+  
+  return RenderShape (verts: verts, indices: indices)
+}
+
 func polyFillShape(points: [CGVector], color: Color) -> RenderShape {
   let color = color.as_simd()
   

@@ -19,7 +19,6 @@ enum SelectionModeEvent {
 
 class SelectionMode {
   var active = false
-  //var transformFingers: [TouchId: CGVector] = [:]
   
   let buttons = [
     (CGVector(dx: 50.0, dy: 50.0), 2),
@@ -35,7 +34,6 @@ class SelectionMode {
       // Read positions
       var positions: [CGVector] = []
       for (touchId, touch) in touches.active_fingers {
-        //transformFingers[touchId] = touch
         positions.append(touch)
       }
       
@@ -46,7 +44,9 @@ class SelectionMode {
       }
       
       let transform = TransformMatrix()
-      transform.from_line(positions[0], positions[1])
+      let a = (positions[0] + positions[1]) / 2
+      let b = positions[1]
+      transform.from_line(a, b)
       
       if active == false {
         result = .StartMorph(transform)
