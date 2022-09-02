@@ -47,7 +47,14 @@ class Canvas {
   }
   
   func selectPolygon(_ polygon: [CGVector]) {
-    selection = CanvasSelection(clusters.findClustersInPolygon(polygon))
+    let foundSelection = CanvasSelection(clusters.findClustersInPolygon(polygon))
+    
+    if selection == nil {
+      selection = foundSelection
+    } else {
+      selection?.updateSelection(foundSelection)
+    }
+    
   }
   
 //    if mode == .Erase {

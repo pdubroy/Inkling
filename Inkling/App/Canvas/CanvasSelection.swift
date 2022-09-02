@@ -46,6 +46,17 @@ class CanvasSelection {
     }
   }
   
+  func updateSelection(_ update: CanvasSelection) {
+    let foundClusters = update.selectedClusters
+    for fc in foundClusters {
+      if selectedClusters.contains(where: {nc in nc === fc }) {
+        selectedClusters.removeAll(where: {nc in nc === fc })
+      } else {
+        selectedClusters.append(fc)
+      }
+    }
+  }
+  
 //  func contains(_ cluster: NodeCluster) -> Bool {
 //    return selectedClusters.contains { c in c === cluster}
 //  }
