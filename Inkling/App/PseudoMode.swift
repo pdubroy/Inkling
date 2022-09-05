@@ -68,29 +68,30 @@ class PseudoModeInput {
         return .Nothing
       }
       
-      // Capture Guide Mode
-      if touches.active_fingers.count == 2 {
-        var positions: [CGVector] = []
-        var touchIds: [TouchId] = []
-        for (touchId, touch) in touches.active_fingers {
-          positions.append(touch)
-          touchIds.append(touchId)
+      if mode == .Drag {
+        // Capture Guide Mode
+        if touches.active_fingers.count == 2 {
+          var positions: [CGVector] = []
+          var touchIds: [TouchId] = []
+          for (touchId, touch) in touches.active_fingers {
+            positions.append(touch)
+            touchIds.append(touchId)
+          }
+          
+          if distance(positions[0], positions[1]) < 100.0 {
+            mode = .Default
+            return .GuideMode(positions, touchIds)
+          }
         }
         
-        if distance(positions[0], positions[1]) < 100.0 {
-          mode = .Default
-          return .GuideMode(positions, touchIds)
+        // Capture Dynamic Guide
+        if let pencil_pos = touches.active_pencil {
+          if distance(pencil_pos, position) < 100.0 {
+            mode = .Default
+            return .DynamicGuide(fingerId!, position, pencil_pos)
+          }
         }
       }
-      
-      // Capture Dynamic Guide
-      if let pencil_pos = touches.active_pencil {
-        if distance(pencil_pos, position) < 100.0 {
-          mode = .Default
-          return .DynamicGuide(fingerId!, position, pencil_pos)
-        }
-      }
-      
     }
     
     

@@ -57,7 +57,7 @@ class CanvasBezier: CanvasElement {
       other = nodes[3]
     }
     
-    return node.position + (other.position - node.position).normalized() * 10.0
+    return node.position + (other.position - node.position).normalized() * 20.0
   }
   
   func render(_ renderer: Renderer) {

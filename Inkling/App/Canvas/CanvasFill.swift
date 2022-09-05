@@ -39,7 +39,7 @@ class CanvasFill: CanvasElement {
       right = 0
     }
     
-    let offset = ((nodes[left].position - node.position) + (nodes[right].position - node.position)).normalized() * 10.0;
+    let offset = ((nodes[left].position - node.position) + (nodes[right].position - node.position)).normalized() * 20.0;
     
     
     return node.position + offset
