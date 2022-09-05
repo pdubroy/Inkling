@@ -113,8 +113,6 @@ class Stroke {
       end = end + 1
     }
     
-    print("split ", start, end, points.count)
-    
     return Stroke(
       Array(points[start...end]),
       Array(weights[start...end]),

@@ -29,6 +29,8 @@
 		1F5F164C28B78BE200751949 /* Select.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F5F164B28B78BE200751949 /* Select.png */; };
 		1F5F164E28B7AB8600751949 /* SelectionCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5F164D28B7AB8600751949 /* SelectionCapture.swift */; };
 		1F9F920728C62C1000298AE2 /* DynamicGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9F920628C62C1000298AE2 /* DynamicGuide.swift */; };
+		1F9F920928C6488F00298AE2 /* FitCurveChaikin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9F920828C6488F00298AE2 /* FitCurveChaikin.swift */; };
+		1F9F920B28C651EA00298AE2 /* CanvasCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9F920A28C651EA00298AE2 /* CanvasCurve.swift */; };
 		1FB0A50028AE795F00D29342 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A4FF28AE795F00D29342 /* AppDelegate.swift */; };
 		1FB0A50228AE795F00D29342 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A50128AE795F00D29342 /* SceneDelegate.swift */; };
 		1FB0A50428AE795F00D29342 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A50328AE795F00D29342 /* ViewController.swift */; };
@@ -86,6 +88,8 @@
 		1F5F164B28B78BE200751949 /* Select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Select.png; sourceTree = "<group>"; };
 		1F5F164D28B7AB8600751949 /* SelectionCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionCapture.swift; sourceTree = "<group>"; };
 		1F9F920628C62C1000298AE2 /* DynamicGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicGuide.swift; sourceTree = "<group>"; };
+		1F9F920828C6488F00298AE2 /* FitCurveChaikin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitCurveChaikin.swift; sourceTree = "<group>"; };
+		1F9F920A28C651EA00298AE2 /* CanvasCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasCurve.swift; sourceTree = "<group>"; };
 		1FB0A4FC28AE795F00D29342 /* Inkling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Inkling.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FB0A4FF28AE795F00D29342 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1FB0A50128AE795F00D29342 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -141,6 +145,7 @@
 				1FF9566128BE62CD000FAD4B /* CanvasElement.swift */,
 				1FB0A53F28B506B500D29342 /* CanvasLine.swift */,
 				1F15D00728B6471A00DAFB6E /* CanvasBezier.swift */,
+				1F9F920A28C651EA00298AE2 /* CanvasCurve.swift */,
 				1FF9565F28BE5B09000FAD4B /* CanvasFill.swift */,
 				1F25BD5F28BF82F6000ABC1C /* CanvasSelection.swift */,
 				1FB0A52928AE932700D29342 /* Stroke.swift */,
@@ -231,6 +236,7 @@
 				1FE3848828C20FC000933658 /* ChaikinCurve.swift */,
 				1FE3848A28C261C600933658 /* Graph.swift */,
 				1FE3848C28C2620700933658 /* Extensions.swift */,
+				1F9F920828C6488F00298AE2 /* FitCurveChaikin.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -350,6 +356,7 @@
 				1FB0A52128AE7F9B00D29342 /* App.swift in Sources */,
 				1FB0A50428AE795F00D29342 /* ViewController.swift in Sources */,
 				1FB0A51528AE7ADD00D29342 /* MultiGestureRecognizer.swift in Sources */,
+				1F9F920B28C651EA00298AE2 /* CanvasCurve.swift in Sources */,
 				1FB0A51828AE7D5800D29342 /* CGVectorExtensions.swift in Sources */,
 				1F25BD6428BFA28C000ABC1C /* DraggingMode.swift in Sources */,
 				1FE3848D28C2620700933658 /* Extensions.swift in Sources */,
@@ -366,6 +373,7 @@
 				1FE3848B28C261C600933658 /* Graph.swift in Sources */,
 				1FF9566028BE5B09000FAD4B /* CanvasFill.swift in Sources */,
 				1FB0A50028AE795F00D29342 /* AppDelegate.swift in Sources */,
+				1F9F920928C6488F00298AE2 /* FitCurveChaikin.swift in Sources */,
 				1FB0A51A28AE7ECD00D29342 /* Renderer.swift in Sources */,
 				1F15D00C28B6560700DAFB6E /* FitCurve.swift in Sources */,
 				1F15D00A28B6475400DAFB6E /* AnalyseStroke.swift in Sources */,

@@ -92,15 +92,19 @@ func analyseStroke(_ stroke: Stroke) -> [CanvasElement] {
   
   for seg in curved_segments {
     let newStroke = stroke.segment(seg.0, seg.1)
-    let fittedBezier = FitCurve(points: newStroke.points, error: 100.0)
     
-    for controlPoints in fittedBezier {
-      let start = newStroke.points.firstIndex(of: controlPoints[0])!
-      let end = newStroke.points.firstIndex(of: controlPoints[3])!
-      
-      let bezierSegment = newStroke.segment(start, end)
-      lines.append(CanvasBezier(bezierSegment, controlPoints))
-    }
+    let controlPoints = FitCurveChaikin(points: newStroke.points, error: 2.0)
+    lines.append(CanvasCurve(newStroke, controlPoints))
+    //let fittedBezier = FitCurve(points: newStroke.points, error: 100.0)
+    
+    
+//    for controlPoints in fittedBezier {
+//      let start = newStroke.points.firstIndex(of: controlPoints[0])!
+//      let end = newStroke.points.firstIndex(of: controlPoints[3])!
+//
+//      let bezierSegment = newStroke.segment(start, end)
+//      lines.append(CanvasBezier(bezierSegment, controlPoints))
+//    }
   }
   
   return lines

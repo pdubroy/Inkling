@@ -25,7 +25,7 @@ func ChaikinCurve(points: [CGVector], depth: Int = 3) -> [CGVector] {
   if(depth == 0) {
       return chaikin_points
   } else {
-    return ComputeChaikinPoints(points: chaikin_points, depth: depth-1)
+    return [points[0]] + ComputeChaikinPoints(points: chaikin_points, depth: depth-1) + [points[points.count-1]]
   }
 }
 

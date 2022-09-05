@@ -203,3 +203,15 @@ func ClosestPointOnLineSegment(_ p: CGVector, _ a: CGVector, _ b: CGVector) -> C
     
   return CGVector(dx: a.dx + atob.dx * t,  dy: a.dy + atob.dy * t)
 }
+
+
+func lineLength(_ points: [CGVector]) -> CGFloat {
+  var length_accumulator: CGFloat = 0
+  
+  for i in 0..<points.count-1 {
+    let length = distance(points[i+1], points[i])
+    length_accumulator += length
+  }
+  
+  return length_accumulator
+}
