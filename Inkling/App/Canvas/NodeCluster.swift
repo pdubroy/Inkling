@@ -31,20 +31,44 @@ class NodeClusters {
   }
   
   func findClosestCluster(_ position: CGVector) -> NodeCluster? {
-    let index = findClosestPointInCollection(points: clusters.map({ n in n.position}), point: position, min_dist: 30.0)
-    if index > -1 {
-      let foundCluster = clusters[index]
+    let closeByClusters = clusters.filter { nc in distance(nc.position, position) < 30.0 }
+    
+    var closestCluster: NodeCluster? = nil
+    var closestNode: Node? = nil
+    
+    var closestDistance = 30.0
+    
+    for nc in closeByClusters {
+      let d = distance(nc.position, position)
+      if d < closestDistance {
+        closestDistance = d
+        closestNode = nil
+        closestCluster = nc
+      }
       
-      if distance(position, foundCluster.position) > 15.0 {
-        if let subNode = foundCluster.findClosestSubnode(position) {
-          foundCluster.removeNode(subNode)
-          let cluster = NodeCluster(subNode)
-          clusters.append(cluster)
-          return cluster
+      for offset in nc.getOffsetsForSubnodes() {
+
+        
+        let nd = distance(offset.0, position)
+        if nd < closestDistance {
+          closestDistance = nd
+          closestNode = offset.1
+          closestCluster = nc
         }
       }
-      return foundCluster
     }
+    
+    if closestCluster !== nil {
+      if closestNode !== nil {
+        closestCluster!.removeNode(closestNode!)
+        let cluster = NodeCluster(closestNode!)
+        clusters.append(cluster)
+        return cluster
+      } else {
+        return closestCluster!
+      }
+    }
+    
     return nil
   }
   
@@ -52,9 +76,58 @@ class NodeClusters {
     return clusters.filter { cluster in isPointInPolygon( cluster.position, polygon) }
   }
   
+  func removeNodesWithElement(_ element: CanvasElement){
+    for cluster in clusters {
+      cluster.removeNodesWithElement(element)
+    }
+  }
+  
+  func findEnclosingPolygon(_ position: CGVector) -> [CGVector]? {
+    let graph = ConnectivityGraph()
+    
+    var clustersById: [Int: NodeCluster] = [:]
+    
+    for cluster in clusters {
+      for node in cluster.nodes {
+        clustersById[cluster.id] = cluster
+        var other = node.element.nodes[0]
+        if node === other {
+          other = node.element.nodes[1]
+        }
+        if let otherCluster = findClusterwithNode(other) {
+          graph.add_edge(cluster.id, otherCluster.id)
+        }
+      }
+    }
+    
+    let loops = graph.get_base_cycles_disconnected()
+    dump(graph)
+    dump(loops)
+    
+    for loop in loops {
+      let loopNodes = loop.map({nodeId in clustersById[nodeId]!})
+      let positions = loopNodes.map({node in node.position})
+      if isPointInPolygon(position, positions) {
+        return positions
+      }
+    }
+    
+    return nil
+  }
+  
+  func findClusterwithNode(_ node: Node) -> NodeCluster? {
+    return clusters.first(where: {cluster in cluster.nodes.contains(where: {n in n === node})})
+  }
+  
   func render(_ renderer: Renderer) {
     for c in clusters {
       c.render(renderer)
+    }
+  }
+  
+  func removeNode(_ node: Node) {
+    for cluster in clusters {
+      cluster.removeNode(node)
     }
   }
   
@@ -65,13 +138,18 @@ class NodeClusters {
   }
 }
 
+var nodeClusterIds = 0
+
 class NodeCluster {
+  let id: Int
   var nodes: [Node] = []
   var position: CGVector
   
   init(_ node: Node) {
     self.nodes.append(node)
     self.position = node.position
+    nodeClusterIds += 1
+    id = nodeClusterIds
   }
   
   func addNode(_ node: Node) {
@@ -97,29 +175,33 @@ class NodeCluster {
     self.position = average(self.nodes.map({ np in np.position}))
   }
   
-  func findClosestSubnode(_ position: CGVector) -> Node? {
-    let index = findClosestLineInCollection(
-      lines: nodes.map({ n in (n.element.nodes[0].position, n.element.nodes[1].position) }),
-      point: position,
-      min_dist: 30.0
-    )
+  func removeNodesWithElement(_ element: CanvasElement) {
+    nodes.removeAll(where: {n in n.element === element })
+    self.position = average(self.nodes.map({ np in np.position}))
+  }
+  
+  func getOffsetsForSubnodes() -> [(CGVector, Node)] {
+    var offsets: [(CGVector, Node)] = []
     
-    if index > -1 {
-      return nodes[index]
+    for node in nodes {
+      offsets.append((
+        node.element.getOffsetPositionForNode(node),
+        node
+      ))
     }
     
-    return nil
-    
-//    let index = findClosestPointInCollection(points: nodes.map({ n in n.position}), point: position, min_dist: 30.0)
-//    if index > -1 {
-//      return nodes[index]
-//    }
-//    return nil
+    return offsets
   }
+  
+
   
   func render(_ renderer: Renderer) {
     renderer.addShapeData(circleShape(pos: position, radius: 4.0, resolution: 8, color: Color(255, 255, 255)))
     renderer.addShapeData(circleShape(pos: position, radius: 3.0, resolution: 8, color: Color(73, 172, 214)))
+    
+//    for (pos, _) in getOffsetsForSubnodes() {
+//      renderer.addShapeData(circleShape(pos: pos, radius: 2.0, resolution: 8, color: Color(73, 172, 214)))
+//    }
   }
   
   func renderSelection(_ renderer: Renderer) {

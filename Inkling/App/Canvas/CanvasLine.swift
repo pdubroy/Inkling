@@ -5,6 +5,8 @@
 //  Created by Marcel on 23/08/2022.
 //
 
+import UIKit
+
 class CanvasLine: CanvasElement {
   var stroke: Stroke
   var nodes: [Node]
@@ -46,6 +48,17 @@ class CanvasLine: CanvasElement {
     
     stroke.updateVerts()
   }
+  
+  func getOffsetPositionForNode(_ node: Node) -> CGVector {
+    var other = nodes[0]
+    
+    if other === node {
+      other = nodes[1]
+    }
+    
+    return node.position + (other.position - node.position).normalized() * 20.0
+  }
+  
   
   func render(_ renderer: Renderer) {
     stroke.render(renderer)

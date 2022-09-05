@@ -14,7 +14,10 @@ class ColorPicker {
   
   var open: Bool
   
-  var position: CGVector
+  let position: CGVector
+  
+  var draggingPosition: CGVector = CGVector()
+  var draggingIndex = -1
   
   init() {
     colors = [
@@ -30,7 +33,7 @@ class ColorPicker {
     open = false
   }
   
-  func update(_ touches: Touches) -> Color? {
+  func update(_ touches: Touches) -> (Color, CGVector)? {
     
     if let event = touches.did(.Pencil, .Begin) {
       // Handle Open Menu
@@ -38,10 +41,9 @@ class ColorPicker {
         for (i, color) in colors.enumerated() {
           let pos = position - CGVector(dx: 0, dy: i * 50)
           if distance(event.pos, pos) < 25 {
-            active_color = color
-            open = false
+            draggingPosition = pos
+            draggingIndex = i
             touches.capture(event)
-            return active_color
           }
         }
       }
@@ -54,6 +56,21 @@ class ColorPicker {
       }
     }
     
+    if let event = touches.did(.Pencil, .End) {
+      if draggingIndex > -1 {
+        active_color = colors[draggingIndex]
+        open = false
+        draggingIndex = -1
+        return (active_color, draggingPosition)
+      }
+    }
+    
+    for event in touches.moved(.Pencil) {
+      if draggingIndex > -1 {
+        draggingPosition = event.pos
+      }
+    }
+    
     return nil
   }
 
@@ -61,7 +78,11 @@ class ColorPicker {
   func render(_ renderer: Renderer) {
     if open {
       for (i, color) in colors.enumerated() {
-        let pos = position - CGVector(dx: 0, dy: i * 50)
+        var pos = position - CGVector(dx: 0, dy: i * 50)
+        
+        if i == draggingIndex {
+          pos = draggingPosition
+        }
         renderer.addShapeData(circleShape(pos: pos, radius: 20.0, resolution: 32, color: color))
       }
     } else {

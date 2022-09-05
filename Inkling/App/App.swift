@@ -44,8 +44,9 @@ class App {
   func update(touches: Touches){
     
     // color picker
-    if let color = colorPicker.update(touches) {
+    if let (color, position) = colorPicker.update(touches) {
       strokeCapture.color = color
+      canvas.addFill(color, position)
     }
     
     // Selection gesture
@@ -60,8 +61,9 @@ class App {
           case let .Morph(transform):
             canvas.selection?.morph(transform)
           case .Simplify:
-          canvas.selection?.simplify()
-          default: ()
+            canvas.selection?.simplify()
+          case .Delete:
+            canvas.deleteSelection()
         }
       }
     }
@@ -101,6 +103,10 @@ class App {
         canvas.selectPolygon(polygon)
         selectionMode = SelectionMode()
       }
+    }
+    
+    if pseudoMode.mode == .Erase {
+      canvas.erase(touches)
     }
     
     if pseudoMode.mode == .Default {

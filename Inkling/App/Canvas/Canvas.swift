@@ -25,8 +25,14 @@ class Canvas {
     }
   }
   
-  func addFill(_ fill: CanvasFill) {
-    addElement(fill)
+  func addFill(_ color: Color, _ position: CGVector) {
+    if let polygon = clusters.findEnclosingPolygon(position) {
+      
+      print("add fill")
+      let fill = CanvasFill(polygon, color: color)
+      addElement(fill)
+    }
+    print("don't fill")
   }
   
   func addElement(_ element: CanvasElement) {
@@ -54,6 +60,46 @@ class Canvas {
     } else {
       selection?.updateSelection(foundSelection)
     }
+  }
+  
+  func erase(_ touches: Touches){
+    for event in touches.moved(.Pencil) {
+       for element in elements {
+         var stroke: Stroke? = nil
+         
+         if let line = element as? CanvasLine {
+           stroke = line.stroke
+         }
+         if let bezier = element as? CanvasBezier {
+           stroke = bezier.stroke
+         }
+         
+         if let stroke = stroke {
+           if let split_strokes = stroke.erase(event.pos) {
+             clusters.removeNodesWithElement(element)
+             elements.removeAll(where: {e in e === element })
+             for s in split_strokes {
+               addStroke(s)
+             }
+           }
+         }
+       }
+    }
+  }
+  
+  func deleteSelection(){
+    if let selection = selection {
+      for cluster in selection.selectedClusters {
+        for node in cluster.nodes {
+          clusters.removeNode(node)
+          elements.removeAll(where: {e in e === node.element})
+          handles.removeAll(where: {h in h.element === node.element})
+        }
+      }
+      
+      
+    }
+    
     
   }
   

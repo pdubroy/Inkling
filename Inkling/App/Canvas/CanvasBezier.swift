@@ -50,6 +50,16 @@ class CanvasBezier: CanvasElement {
     stroke.updateVerts()
   }
   
+  func getOffsetPositionForNode(_ node: Node) -> CGVector {
+    var other = nodes[0]
+    
+    if other === node {
+      other = nodes[3]
+    }
+    
+    return node.position + (other.position - node.position).normalized() * 20.0
+  }
+  
   func render(_ renderer: Renderer) {
     stroke.render(renderer)
   }

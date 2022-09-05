@@ -6,15 +6,21 @@
 //
 
 import Foundation
+import UIKit
 
 class CanvasFill: CanvasElement {
   var nodes: [Node]
   var renderShape: RenderShape
   var color: Color
   
-  init(_ nodes: [Node], color: Color){
-    self.nodes = nodes
+  init(_ points: [CGVector], color: Color){
+    self.nodes = []
     self.color = color
+    self.renderShape = polyFillShape(points: [], color: color)
+    
+    self.nodes = points.map({p in
+      Node(p, self)
+    })
     self.renderShape = polyFillShape(points: nodes.map({ n in n.position }), color: color)
   }
   
@@ -22,7 +28,24 @@ class CanvasFill: CanvasElement {
     self.renderShape = polyFillShape(points: nodes.map({ n in n.position }), color: color)
   }
   
-  func render(_ renderer: Renderer) {
+  func getOffsetPositionForNode(_ node: Node) -> CGVector {
+    let index = nodes.firstIndex(where: {n in n === node})!
+    var left = index - 1
+    if left == -1 {
+      left = nodes.count - 1
+    }
+    var right = index + 1
+    if right == nodes.count {
+      right = 0
+    }
     
+    let offset = ((nodes[left].position - node.position) + (nodes[right].position - node.position)).normalized() * 20.0;
+    
+    
+    return node.position + offset
+  }
+  
+  func render(_ renderer: Renderer) {
+    renderer.addShapeData(renderShape)
   }
 }

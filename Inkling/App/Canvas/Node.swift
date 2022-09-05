@@ -8,12 +8,17 @@
 import Foundation
 import UIKit
 
+var nodeIds = 0
+
 class Node {
+  var id: Int
   var position: CGVector
   
   var element: CanvasElement
   
   init(_ position: CGVector, _ element: CanvasElement) {
+    nodeIds += 1
+    self.id = nodeIds
     self.position = position
     self.element = element
   }

@@ -6,10 +6,13 @@
 //
 
 import Foundation
+import UIKit
 
 protocol CanvasElement: class {
   var nodes: [Node] { get set }
   
   func render(_ renderer: Renderer)
   func morph()
+  
+  func getOffsetPositionForNode(_ node: Node) -> CGVector
 }
