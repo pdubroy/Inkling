@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol CanvasElement: class {
+protocol CanvasElement: AnyObject {
   var nodes: [Node] { get set }
   
   func render(_ renderer: Renderer)

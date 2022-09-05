@@ -16,11 +16,12 @@ class App {
   
   var strokeCapture: StrokeCapture!
   var selectionCapture: SelectionCaputure!
-  var guideModeCapture: GuideModeCapture!
+  //var guideModeCapture: GuideModeCapture!
   
   var draggingMode: DraggingMode?
   var selectionMode: SelectionMode?
   var guideMode: GuideMode?
+  var dynamicGuide: DynamicGuide?
   
   var pseudoMode: PseudoModeInput!
   
@@ -36,7 +37,7 @@ class App {
     
     strokeCapture = StrokeCapture()
     selectionCapture = SelectionCaputure()
-    guideModeCapture = GuideModeCapture()
+    //guideModeCapture = GuideModeCapture()
     
     pseudoMode = PseudoModeInput()
   }
@@ -64,6 +65,8 @@ class App {
             canvas.selection?.simplify()
           case .Delete:
             canvas.deleteSelection()
+            selectionMode = nil
+            canvas.selection = nil
         }
       }
     }
@@ -73,11 +76,6 @@ class App {
       draggingMode.update(touches)
     }
     
-    // Guide gesture
-    if guideMode == nil, let (positions, touches) = guideModeCapture.update(touches) {
-      guideMode = GuideMode(positions, touches)
-    }
-    
     // Guide mode
     if guideMode != nil {
       if guideMode!.update(touches) {
@@ -85,9 +83,25 @@ class App {
       }
     }
     
+    // Dynamic Guide
+    if dynamicGuide != nil {
+      if dynamicGuide!.update(touches) {
+        dynamicGuide = nil
+      }
+    }
     
-    // PseudoModes
-    pseudoMode.update(touches)
+    
+    // PseudoMode
+    let pseudoModeResult = pseudoMode.update(touches)
+    if case let .GuideMode(positions, touches) = pseudoModeResult {
+      guideMode = GuideMode(positions, touches)
+    }
+    
+    if case let .DynamicGuide(touchId, touchPos, pencilPos) = pseudoModeResult {
+      dynamicGuide = DynamicGuide(touchId, touchPos, pencilPos)
+    }
+    
+    
     if pseudoMode.mode == .Drag {
       if draggingMode == nil {
         draggingMode = DraggingMode(canvas.clusters, canvas.handles)
@@ -121,6 +135,10 @@ class App {
   func render(renderer: Renderer) {
     if let guideMode = guideMode {
       guideMode.render(renderer)
+    }
+    
+    if let dynamicGuide = dynamicGuide {
+      dynamicGuide.render(renderer)
     }
     
     canvas.render(renderer, pseudoMode.mode)

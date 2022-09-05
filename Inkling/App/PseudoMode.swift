@@ -15,13 +15,22 @@ enum PseudoMode {
   case Erase
 }
 
+enum PseudoModeGuide {
+  case Nothing
+  case GuideMode([CGVector], [TouchId])
+  case DynamicGuide(TouchId, CGVector, CGVector)
+  
+}
+
 class PseudoModeInput {
   var mode: PseudoMode = .Default
   var fingerId: TouchId? = nil
   var position = CGVector()
   var offset = CGVector()
   
-  func update(_ touches: Touches) {
+  func update(_ touches: Touches) -> PseudoModeGuide {
+    
+    // Activate Menu
     if mode == .Default {
       if touches.active_fingers.count == 1, let event = touches.did(.Finger, .Begin) {
         mode = .Drag
@@ -29,16 +38,15 @@ class PseudoModeInput {
         position = event.pos
         offset = event.pos
         touches.capture(event)
-        
       }
     }
     
+    
     if mode != .Default {
+      // Radial Menu
       for event in touches.moved(.Finger, fingerId!) {
         offset = event.pos
         touches.capture(event)
-        
-        
         
         if distance(offset, position) > 40.0 {
           let angle = (offset - position).angle()
@@ -57,9 +65,38 @@ class PseudoModeInput {
       
       if let _ = touches.did(.Finger, .End, fingerId!) {
         mode = .Default
+        return .Nothing
       }
+      
+      // Capture Guide Mode
+      if touches.active_fingers.count == 2 {
+        var positions: [CGVector] = []
+        var touchIds: [TouchId] = []
+        for (touchId, touch) in touches.active_fingers {
+          positions.append(touch)
+          touchIds.append(touchId)
+        }
+        
+        if distance(positions[0], positions[1]) < 100.0 {
+          mode = .Default
+          return .GuideMode(positions, touchIds)
+        }
+      }
+      
+      // Capture Dynamic Guide
+      if let pencil_pos = touches.active_pencil {
+        if distance(pencil_pos, position) < 100.0 {
+          mode = .Default
+          return .DynamicGuide(fingerId!, position, pencil_pos)
+        }
+      }
+      
     }
     
+    
+
+    
+    return .Nothing
   }
   
   func render(_ renderer: Renderer) {
