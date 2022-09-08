@@ -250,3 +250,17 @@ func getPointAtLength(lengths: [CGFloat], points: [CGVector], length: CGFloat) -
   
   return lerp(start: start, end: end, t: t)
 }
+
+func getIndexAtLength(lengths: [CGFloat], points: [CGVector], length: CGFloat) -> Int {
+  if(length <= 0) {
+    return 0
+  }
+  
+  if(length >= lengths[lengths.count-1]) {
+    return points.count-1
+  }
+  
+  let index = lengths.firstIndex(where: {i in i >= length})!
+
+  return index - 1
+}

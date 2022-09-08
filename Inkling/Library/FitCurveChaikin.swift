@@ -57,16 +57,30 @@ func fitCurveChaikin(points: [CGVector], initialGuess: [CGVector], error: CGFloa
 }
 
 func sampleCurve(_ points: [CGVector], _ sampleCount: CGFloat) -> [CGVector] {
-  let sampleCount = 20.0;
+  let sampleCount = 20;
   let curveLengths = lineLengths(points)
   let totalCurveLength = curveLengths.last!
-  let lengthOffset = totalCurveLength / sampleCount
+  let lengthOffset = totalCurveLength / CGFloat(sampleCount)
   
   var equidistantSampledPoints: [CGVector] = []
   var i: CGFloat = 0
-  while i < totalCurveLength {
-    equidistantSampledPoints.append(getPointAtLength(lengths: curveLengths, points: points, length: i))
-    i += lengthOffset
+  for i in 0...sampleCount {
+    equidistantSampledPoints.append(getPointAtLength(lengths: curveLengths, points: points, length: CGFloat(i) * lengthOffset))
+  }
+  
+  return equidistantSampledPoints
+}
+
+func sampleCurveIndex(_ points: [CGVector], _ sampleCount: CGFloat) -> [Int] {
+  let sampleCount = 20
+  let curveLengths = lineLengths(points)
+  let totalCurveLength = curveLengths.last!
+  let lengthOffset = totalCurveLength / CGFloat(sampleCount)
+  
+  var equidistantSampledPoints: [Int] = []
+  var i: CGFloat = 0
+  for i in 0...sampleCount {
+    equidistantSampledPoints.append(getIndexAtLength(lengths: curveLengths, points: points, length: CGFloat(i) * lengthOffset))
   }
   
   return equidistantSampledPoints
