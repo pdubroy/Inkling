@@ -215,3 +215,38 @@ func lineLength(_ points: [CGVector]) -> CGFloat {
   
   return length_accumulator
 }
+
+func lineLengths(_ points: [CGVector]) -> [CGFloat] {
+  var lengths: [CGFloat] = []
+  var length_accumulator: CGFloat = 0
+  lengths.append(length_accumulator)
+  for i in 0..<points.count-1 {
+    let length = distance(points[i+1], points[i])
+    length_accumulator += length
+    lengths.append(length_accumulator)
+  }
+  return lengths
+}
+
+func getPointAtLength(lengths: [CGFloat], points: [CGVector], length: CGFloat) -> CGVector {
+  if(length <= 0) {
+    return points[0]
+  }
+  
+  if(length >= lengths[lengths.count-1]) {
+    return points[points.count-1]
+  }
+  
+  let index = lengths.firstIndex(where: {i in i >= length})!
+  
+  
+  let start_length = lengths[index-1]
+  let end_length = lengths[index]
+  
+  let t = (length - start_length) / (end_length - start_length)
+  
+  let start = points[index-1]
+  let end = points[index]
+  
+  return lerp(start: start, end: end, t: t)
+}

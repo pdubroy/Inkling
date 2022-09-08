@@ -59,7 +59,7 @@ class DynamicGuide {
     
     // If the pencil is moved, update pencil position
     for (index, event) in touches.events.enumerated() {
-      if event.type == .Pencil && (event.event_type == .Move || event.event_type == .Predict) {
+      if event.type == .Pencil {
         let closestPointOnLine = ScalarProjection(p: event.pos, a: finger, b: pencil)
         pencil = closestPointOnLine
         touches.events[index].pos = closestPointOnLine

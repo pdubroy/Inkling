@@ -65,53 +65,28 @@ func analyseStroke(_ stroke: Stroke) -> [CanvasElement] {
     ))
   }
   
-  // Extract straight segments, and
-  var straight_segments: [(Int, Int)] = []
-  var curved_segments: [(Int, Int)] = []
   
-  for i in 0..<key_points.count-1 {
-    let a = key_points[i]
-    let b = key_points[i+1]
-    
-    if a.corner && b.corner {
-      straight_segments.append((a.index, b.index))
-    } else {
-      if curved_segments.count > 0, curved_segments.last!.1 == a.index {
-        curved_segments[curved_segments.count-1].1 = b.index
+  // Extract straight segments, and curves
+  var segment: [KeyPoint] = [key_points[0]]
+  var elements: [CanvasElement] = []
+  
+  for i in 1..<key_points.count {
+    let kp = key_points[i]
+    segment.append(kp)
+    if kp.corner {
+      if segment.count == 2 {
+        print("line")
+        elements.append(CanvasLine(stroke.segment(segment[0].index, segment[1].index)))
       } else {
-        curved_segments.append((a.index, b.index))
+        print("curve")
+        let segmentedStroke = stroke.segment(segment[0].index, segment[segment.count-1].index)
+        let initialGuess = segment.map({kp in kp.point })
+        let fittedGuess = fitCurveChaikin(points: segmentedStroke.points, initialGuess: initialGuess, error: 20.0)
+        elements.append(CanvasCurve(segmentedStroke, fittedGuess))
       }
+      segment = [kp]
     }
   }
   
-  
-  var lines: [CanvasElement] = []
-  for seg in straight_segments {
-    lines.append(CanvasLine(stroke.segment(seg.0, seg.1)))
-  }
-  
-  for seg in curved_segments {
-    let newStroke = stroke.segment(seg.0, seg.1)
-    
-    let controlPoints = FitCurveChaikin(points: newStroke.points, error: 2.0)
-    lines.append(CanvasCurve(newStroke, controlPoints))
-    //let fittedBezier = FitCurve(points: newStroke.points, error: 100.0)
-    
-    
-//    for controlPoints in fittedBezier {
-//      let start = newStroke.points.firstIndex(of: controlPoints[0])!
-//      let end = newStroke.points.firstIndex(of: controlPoints[3])!
-//
-//      let bezierSegment = newStroke.segment(start, end)
-//      lines.append(CanvasBezier(bezierSegment, controlPoints))
-//    }
-  }
-  
-  return lines
-  
-//  let key_point_indices = simplified_points.map { point in
-//    stroke.points.firstIndex(where: {$0 == point})!
-//  }
-//
-//  return key_point_indices.map { index in stroke.points[index] }
+  return elements
 }
