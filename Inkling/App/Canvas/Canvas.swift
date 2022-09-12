@@ -27,12 +27,9 @@ class Canvas {
   
   func addFill(_ color: Color, _ position: CGVector) {
     if let polygon = clusters.findEnclosingPolygon(position) {
-      
-      print("add fill")
       let fill = CanvasFill(polygon, color: color)
       addElement(fill)
     }
-    print("don't fill")
   }
   
   func addElement(_ element: CanvasElement) {
@@ -60,6 +57,12 @@ class Canvas {
     } else {
       selection?.updateSelection(foundSelection)
     }
+    
+    if selection != nil {
+      if selection?.selectedClusters.count == 0 {
+        selection = nil
+      }
+    }
   }
   
   func erase(_ touches: Touches){
@@ -70,8 +73,8 @@ class Canvas {
          if let line = element as? CanvasLine {
            stroke = line.stroke
          }
-         if let bezier = element as? CanvasBezier {
-           stroke = bezier.stroke
+         if let curve = element as? CanvasCurve {
+           stroke = curve.stroke
          }
          
          if let stroke = stroke {
@@ -99,50 +102,7 @@ class Canvas {
       
       
     }
-    
-    
   }
-  
-//    if mode == .Erase {
-////      for event in touches.moved(.Pencil) {
-////        for stroke in strokes {
-////          if let split_strokes = stroke.erase(event.pos) {
-////            clusters.removeNodesWithStroke(stroke)
-////            lines.removeAll(where: { l in l.stroke === stroke })
-////            strokes.removeAll(where: { s in s === stroke})
-////            for s in split_strokes {
-////              add_stroke(s)
-////            }
-////          }
-////        }
-////      }
-//    }
-//
-//    if mode == .Select {
-//      if let polygon = selection.update(touches) {
-//        print("Clusters")
-//        let foundClusters = clusters.findClustersInPolygon(polygon)
-//
-//        for fc in foundClusters {
-//          if selectedClusters.contains(where: {nc in nc === fc }) {
-//            selectedClusters.removeAll(where: {nc in nc === fc })
-//          } else {
-//            selectedClusters.append(fc)
-//          }
-//        }
-//      }
-//    }
-//
-//
-//    // Pencil up
-//    if let _ = touches.did(.Pencil, .End) {
-//      if draggingCluster != nil {
-//        clusters.mergeCluster(draggingCluster!)
-//        draggingCluster = nil
-//      }
-//    }
-//
-//  }
   
   func render(_ renderer: Renderer, _ mode: PseudoMode){
     for element in elements {
@@ -165,43 +125,4 @@ class Canvas {
       selection.render(renderer)
     }
   }
-  
-//  func renderNodes(_ renderer: Renderer) {
-//
-//
-//    if let selection = selection {
-//      selection.render(renderer)
-//    }
-//  }
-
-  
-    
-//    if mode == .Drag || mode == .Select {
-//      clusters.render(renderer)
-//    }
-//
-//    if mode == .Select {
-//      selection.render(renderer)
-//    }
-//
-//    if selectedClusters.count > 0 {
-//
-//      let size = CGVector(dx: 20.0, dy: 20.0)
-//      var position = CGVector(dx: 50.0, dy: 50.0)
-//
-//      //renderer.addShapeData(circleShape(pos: position, radius: 30.0, resolution: 32, color: Color(50, 44, 44, 255)))
-//      renderer.addShapeData(imageShape(a: position - size, b: position + size, texture: 2))
-//
-//      position = CGVector(dx: 120.0, dy: 50.0)
-////      renderer.addShapeData(circleShape(pos: position, radius: 30.0, resolution: 32, color: Color(50, 44, 44, 255)))
-//      renderer.addShapeData(imageShape(a: position - size, b: position + size, texture: 3))
-//
-//      position = CGVector(dx: 1150.0, dy: 50.0)
-////      renderer.addShapeData(circleShape(pos: position, radius: 30.0, resolution: 32, color: Color(50, 44, 44, 255)))
-//      renderer.addShapeData(imageShape(a: position - size, b: position + size, texture: 4))
-//
-//      for sc in selectedClusters {
-//        renderer.addShapeData(circleShape(pos: sc.position, radius: 4.0, resolution: 8, color: Color(255, 0, 0)))
-//      }
-//    }
 }

@@ -42,6 +42,10 @@ class Stroke {
       resampled_weights.append(weight)
       length += step
     }
+    
+    let (point, weight) = getPointAtLength(total_length)
+    resampled_points.append(point)
+    resampled_weights.append(weight)
 
     points = resampled_points
     weights = resampled_weights
@@ -105,13 +109,13 @@ class Stroke {
     var end = end
     var start = start
     
-    if start > 0 {
-      start = start - 1
-    }
-
-    if end < points.count - 1 {
-      end = end + 1
-    }
+//    if start > 0 {
+//      start = start - 1
+//    }
+//
+//    if end < points.count - 1 {
+//      end = end + 1
+//    }
     
     return Stroke(
       Array(points[start...end]),
@@ -139,41 +143,25 @@ class Stroke {
   }
   
   func erase(_ position: CGVector) -> [Stroke]? {
-    var toBeRemoved: [Int] = []
-    for (i, point) in points.enumerated() {
-      if distance(point, position) < 10.0 {
-        toBeRemoved.append(i)
+    
+    let index = findClosestPointInCollection(points: points, point: position, min_dist: 10.0)
+    
+    if index > -1 {
+      if points.count  == 1 {
+        return []
+      }
+      if index == 0 {
+        return [segment(1, points.count-1)]
+      } else if index == points.count-1 {
+        return [segment(0, points.count-2)]
+      } else {
+        return [
+          segment(0, index),
+          segment(index+1, points.count-1)
+        ]
       }
     }
     
-    var ranges: [(Int, Int)] = []
-    if toBeRemoved.count > 0 {
-      var range = (toBeRemoved[0], toBeRemoved[0])
-      for j in 1..<toBeRemoved.count {
-        let i = toBeRemoved[j]
-        if i == range.1 + 1 {
-          range.1 = i
-        } else {
-          ranges.append(range)
-          range = (i, i)
-        }
-      }
-      ranges.append(range)
-      dump(ranges)
-      
-      var start_pos = 0
-      var segments: [Stroke] = []
-      for range in ranges {
-        if start_pos != range.0 {
-          segments.append(segment(start_pos, range.0))
-        }
-        start_pos = range.1
-      }
-      if start_pos != points.count - 1 {
-        segments.append(segment(start_pos, points.count - 1))
-      }
-      return segments
-    }
     return nil
   }
 }

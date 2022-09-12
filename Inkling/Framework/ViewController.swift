@@ -25,7 +25,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UIImagePick
   
   var app: App!
   
-  var stateBroadcast: StateBroadcast!
+  //var stateBroadcast: StateBroadcast!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -41,8 +41,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UIImagePick
     renderer.viewRef = self
     
     // Load debugging
-    stateBroadcast = StateBroadcast()
-    stateBroadcast.connect()
+//    stateBroadcast = StateBroadcast()
+//    stateBroadcast.connect()
     
     // Application logic
     app = App(self)

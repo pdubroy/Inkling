@@ -50,3 +50,11 @@ func ComputeChaikinPoints(points: [CGVector], depth: Int = 3) -> [CGVector] {
   }
 }
 
+//
+//func findChaikinCurveIndex(controlPoints: [CGVector], point: CGVector) -> Int {
+//  let curve = ChaikinCurve(points: controlPoints)
+//  let foundIndex = curve.firstIndex(where: {pt in pt.dx == point.dx && pt.dy == point.dy})!
+//  let segmentSize = curve.count / (controlPoints.count - 1)
+//
+//  return foundIndex / segmentSize
+//}

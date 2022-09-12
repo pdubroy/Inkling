@@ -11,27 +11,40 @@ class CanvasCurve: CanvasElement {
   var stroke: Stroke
   var nodes: [Node]
   var curvePoints: [CGVector]
+  var curveLengths: [CGFloat]
+  var sampledPointsOnCurve: [CGVector]
   
   init(_ stroke: Stroke, _ nodes: [CGVector]){
     self.stroke = stroke
     self.nodes = []
     self.curvePoints = ChaikinCurve(points: nodes)
+    self.curveLengths = lineLengths(curvePoints)
+    self.sampledPointsOnCurve = []
     self.nodes = nodes.map({ pos in
       Node(pos, self)
     })
+    
+    for length in self.stroke.lengths {
+      let length = length / self.stroke.lengths[self.stroke.lengths.count-1]
+      self.sampledPointsOnCurve.append(
+        getPointAtLength(lengths: self.curveLengths, points: self.curvePoints, length: length * curveLengths[curveLengths.count-1])
+      )
+    }
+    
   }
   
   func morph(){
     
     // Generate transform for all line segments
-    let oldCurvePoints = curvePoints
-    let oldCurveLengths = lineLengths(oldCurvePoints)
+//    let oldCurvePoints = curvePoints
+//    let oldCurveLengths = curveLengths
     let newCurvePoints = ChaikinCurve(points: nodes.map({ n in n.position }))
     let newCurveLengths = lineLengths(newCurvePoints)
     
     //print(oldSimplifiedCurvePoints.count, newSimplifiedCurvePoints.count)
     let actualCurveLength = stroke.lengths[stroke.lengths.count - 1]
     
+    var newPointsOnCurve: [CGVector] = []
     //var lengthAccumulator: CGFloat = 0.0
     var lastPoint = stroke.points[0]
     for i in 0...stroke.points.count-1 {
@@ -39,8 +52,9 @@ class CanvasCurve: CanvasElement {
       let length = stroke.lengths[i] / actualCurveLength
       lastPoint = stroke.points[i]
       
-      let oldPointOnCurve = getPointAtLength(lengths: oldCurveLengths, points: oldCurvePoints, length: length * oldCurveLengths[oldCurveLengths.count-1])
+      let oldPointOnCurve = sampledPointsOnCurve[i]
       let newPointOnCurve = getPointAtLength(lengths: newCurveLengths, points: newCurvePoints, length: length * newCurveLengths[newCurveLengths.count-1])
+      newPointsOnCurve.append(newPointOnCurve)
       let delta = newPointOnCurve - oldPointOnCurve
       
       stroke.points[i] += delta
@@ -48,52 +62,21 @@ class CanvasCurve: CanvasElement {
     }
     
     curvePoints = newCurvePoints
-//    let sampledIndexes = sampleCurveIndex(self.stroke.points, 20.0)
-//
-//    for i in 0..<newSimplifiedCurvePoints.count-1 {
-//      let new_a = newSimplifiedCurvePoints[i]
-//      let new_b = newSimplifiedCurvePoints[i+1]
-//
-//      let old_a = oldSimplifiedCurvePoints[i]
-//      let old_b = oldSimplifiedCurvePoints[i+1]
-//
-//      var old_transform = TransformMatrix()
-//      old_transform.from_line(old_a, old_b)
-//      old_transform = old_transform.get_inverse()
-//
-//      let new_transform = TransformMatrix()
-//      new_transform.from_line(new_a, new_b)
-//
-//      let old_vec_length = distance(old_a, old_b)
-//      let new_vec_length = distance(new_a, new_b)
-//      let scale = new_vec_length / old_vec_length
-//
-//
-//      for j in sampledIndexes[i]..<sampledIndexes[i+1] {
-//        let point = stroke.points[j]
-//        var projected = old_transform.transform_vector(point)
-//        projected.dx = projected.dx * scale
-//        let new_point = new_transform.transform_vector(projected)
-//        stroke.points[j] = new_point
-//      }
-//
-//
-//    }
-    
+    curveLengths = newCurveLengths
+    sampledPointsOnCurve = newPointsOnCurve
     stroke.updateVerts()
-    
-    //stroke.points = curvePoints
-    //stroke.updateVerts()
   }
   
   func getOffsetPositionForNode(_ node: Node) -> CGVector {
-    var other = nodes[0]
+    var other = nodes[1]
     
-    if other === node {
-      other = nodes[1]
+    if node === nodes[nodes.count-1] {
+      other = nodes[nodes.count-2]
     }
     
-    return node.position + (other.position - node.position).normalized() * 20.0
+    let quaterDistance = distance(other.position, node.position) / 4.0
+    
+    return node.position + (other.position - node.position).normalized() * CGFloat.minimum(quaterDistance, 30.0)
   }
   
   

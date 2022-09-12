@@ -75,10 +75,8 @@ func analyseStroke(_ stroke: Stroke) -> [CanvasElement] {
     segment.append(kp)
     if kp.corner {
       if segment.count == 2 {
-        print("line")
         elements.append(CanvasLine(stroke.segment(segment[0].index, segment[1].index)))
       } else {
-        print("curve")
         let segmentedStroke = stroke.segment(segment[0].index, segment[segment.count-1].index)
         let initialGuess = segment.map({kp in kp.point })
         let fittedGuess = fitCurveChaikin(points: segmentedStroke.points, initialGuess: initialGuess, error: 20.0)

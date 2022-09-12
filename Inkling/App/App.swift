@@ -115,7 +115,11 @@ class App {
     if pseudoMode.mode == .Select {
       if let polygon = selectionCapture.update(touches) {
         canvas.selectPolygon(polygon)
-        selectionMode = SelectionMode()
+        if canvas.selection != nil {
+          selectionMode = SelectionMode()
+        } else {
+          selectionMode = nil
+        }
       }
     }
     

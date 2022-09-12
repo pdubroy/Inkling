@@ -68,7 +68,7 @@ class GuideMode {
           if closestPoint > -1 && !draggingControlPoints.contains(where: { (key: TouchId, value: Int) in value == closestPoint }) {
             draggingControlPoints[event.id] = closestPoint
             touches.capture(event)
-          } else if selected == 1 || selected == 2 {
+          } else if selected == 1 { // Line
             let offset = (controlPoints[1] - controlPoints[0]) * 1000.0
             if PointLineDistance(p: event.pos, a: controlPoints[0] - offset, b: controlPoints[0] + offset) < 50.0 {
               controlPoints.append(event.pos)
@@ -76,8 +76,42 @@ class GuideMode {
               selected = 2
               touches.capture(event)
             }
+          } else if selected == 2 { // CURVE
+
+            let curve = ChaikinCurve(points: controlPoints)
+            if let polyPt = ClosestPointOnPolyline(line: curve, point: event.pos) {
+              let index = findClosestPointInCollection(points: curve, point: polyPt, min_dist: 10000.0)
+              if index > -1 {
+                let segmentSize = curve.count / (controlPoints.count - 1)
+                let controlPointIndex = (index / segmentSize) + 1
+                controlPoints.insert(event.pos, at: controlPointIndex)
+                draggingControlPoints[event.id] = controlPointIndex
+                touches.capture(event)
+              }
+            } else {
+              let offsetA = (controlPoints[1] - controlPoints[0]) * 1000.0
+              let offsetB = (controlPoints[controlPoints.count-1] - controlPoints[controlPoints.count-2]) * 1000.0
+              
+              let apt = ClosestPointOnLineSegment(event.pos, curve[0], curve[0] - offsetA)
+              if distance(apt, event.pos) < 50.0 {
+                print("insert at front")
+                controlPoints.insert(event.pos, at: 0)
+                draggingControlPoints[event.id] = 0
+                touches.capture(event)
+              }
+              
+              let bpt = ClosestPointOnLineSegment(event.pos, curve[curve.count-1], curve[curve.count-1] + offsetB)
+              if distance(bpt, event.pos) < 50.0 {
+                print("insert at back")
+                controlPoints.insert(event.pos, at: controlPoints.count)
+                draggingControlPoints[event.id] = controlPoints.count - 1
+                touches.capture(event)
+              }
+            }
           }
         }
+        
+        
         if event.event_type == .End {
           draggingControlPoints.removeValue(forKey: event.id)
         }

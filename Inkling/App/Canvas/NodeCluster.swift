@@ -31,12 +31,12 @@ class NodeClusters {
   }
   
   func findClosestCluster(_ position: CGVector) -> NodeCluster? {
-    let closeByClusters = clusters.filter { nc in distance(nc.position, position) < 30.0 }
+    let closeByClusters = clusters.filter { nc in distance(nc.position, position) < 40.0 }
     
     var closestCluster: NodeCluster? = nil
     var closestNode: Node? = nil
     
-    var closestDistance = 30.0
+    var closestDistance = 40.0
     
     for nc in closeByClusters {
       let d = distance(nc.position, position)
@@ -90,9 +90,9 @@ class NodeClusters {
     for cluster in clusters {
       for node in cluster.nodes {
         clustersById[cluster.id] = cluster
-        var other = node.element.nodes[0]
+        var other = node.element.nodes.first!
         if node === other {
-          other = node.element.nodes[1]
+          other = node.element.nodes.last!
         }
         if let otherCluster = findClusterwithNode(other) {
           graph.add_edge(cluster.id, otherCluster.id)

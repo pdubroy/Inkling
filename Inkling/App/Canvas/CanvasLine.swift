@@ -56,9 +56,10 @@ class CanvasLine: CanvasElement {
       other = nodes[1]
     }
     
-    return node.position + (other.position - node.position).normalized() * 20.0
+    let quaterDistance = distance(other.position, node.position) / 4.0
+    
+    return node.position + (other.position - node.position).normalized() * CGFloat.minimum(quaterDistance, 30.0)
   }
-  
   
   func render(_ renderer: Renderer) {
     stroke.render(renderer)
