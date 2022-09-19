@@ -27,7 +27,8 @@ class App {
   
   //var strokes: [Stroke]
   var images: [RenderImage] = []
-  
+
+  let scriptLoader: ScriptLoader
   
   init(_ viewRef: ViewController) {
     self.viewRef = viewRef
@@ -40,6 +41,9 @@ class App {
     //guideModeCapture = GuideModeCapture()
     
     pseudoMode = PseudoModeInput()
+
+    scriptLoader = ScriptLoader()
+    scriptLoader.loadAllScripts()
   }
   
   func update(touches: Touches){
@@ -132,8 +136,6 @@ class App {
         canvas.addStroke(stroke)
       }
     }
-    
-    
   }
   
   func render(renderer: Renderer) {

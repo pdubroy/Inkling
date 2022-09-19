@@ -63,6 +63,7 @@
 		1FF9565E28BE58B6000FAD4B /* TriangulatePolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9565D28BE58B6000FAD4B /* TriangulatePolygon.swift */; };
 		1FF9566028BE5B09000FAD4B /* CanvasFill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9565F28BE5B09000FAD4B /* CanvasFill.swift */; };
 		1FF9566228BE62CD000FAD4B /* CanvasElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF9566128BE62CD000FAD4B /* CanvasElement.swift */; };
+		B4E5464E28D8966D00310C27 /* ScriptLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E5464D28D8966D00310C27 /* ScriptLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -125,6 +126,7 @@
 		1FF9565D28BE58B6000FAD4B /* TriangulatePolygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangulatePolygon.swift; sourceTree = "<group>"; };
 		1FF9565F28BE5B09000FAD4B /* CanvasFill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasFill.swift; sourceTree = "<group>"; };
 		1FF9566128BE62CD000FAD4B /* CanvasElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasElement.swift; sourceTree = "<group>"; };
+		B4E5464D28D8966D00310C27 /* ScriptLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +186,7 @@
 				1FB0A4FD28AE795F00D29342 /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		1FB0A4FD28AE795F00D29342 /* Products */ = {
 			isa = PBXGroup;
@@ -255,6 +258,7 @@
 				1F25BD6528BFA8EE000ABC1C /* GuideMode.swift */,
 				1F25BD6728BFADAD000ABC1C /* GuideModeCapture.swift */,
 				1F9F920628C62C1000298AE2 /* DynamicGuide.swift */,
+				B4E5464D28D8966D00310C27 /* ScriptLoader.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -377,6 +381,7 @@
 				1FB0A51A28AE7ECD00D29342 /* Renderer.swift in Sources */,
 				1F15D00C28B6560700DAFB6E /* FitCurve.swift in Sources */,
 				1F15D00A28B6475400DAFB6E /* AnalyseStroke.swift in Sources */,
+				B4E5464E28D8966D00310C27 /* ScriptLoader.swift in Sources */,
 				1FB0A51C28AE7F0600D29342 /* Shader.metal in Sources */,
 				1FB0A52428AE84C000D29342 /* StateBroadcast.swift in Sources */,
 				1FF9566228BE62CD000FAD4B /* CanvasElement.swift in Sources */,
