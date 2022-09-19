@@ -9,7 +9,7 @@ import JavaScriptCore
 import Foundation
 
 let scriptUrls = [
-  "http://Patricks-M1-MacBook.local:8000/index.js"
+  "http://Patricks-M1-MacBook.local:8000/example.js"
 ]
 
 class ScriptLoader {
