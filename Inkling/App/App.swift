@@ -44,6 +44,7 @@ class App {
 
     scriptLoader = ScriptLoader()
     scriptLoader.loadAllScripts()
+    canvas.registerObserver(scriptLoader)
   }
   
   func update(touches: Touches){
@@ -133,7 +134,6 @@ class App {
     
     if pseudoMode.mode == .Default {
       if let stroke = strokeCapture.update(touches.events) {
-        scriptLoader.onStrokeEnd(stroke)
         canvas.addStroke(stroke)
       }
     }

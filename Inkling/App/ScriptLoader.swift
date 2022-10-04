@@ -38,7 +38,7 @@ extension JSValue {
 }
 
 
-class ScriptLoader {
+class ScriptLoader: CanvasObserver {
   let context: JSContext
 
   init() {
@@ -80,5 +80,13 @@ class ScriptLoader {
     } else {
       assert(false, "bad url: \(urlString)")
     }
+  }
+
+  func elementAdded(_ element: CanvasElement) {
+    context["onCanvasElementAdded"]?.call(withArguments: [element])
+  }
+
+  func elementRemoved(_ element: CanvasElement) {
+    context["onCanvasElementRemoved"]?.call(withArguments: [element])
   }
 }
