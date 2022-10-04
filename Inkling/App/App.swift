@@ -133,6 +133,7 @@ class App {
     
     if pseudoMode.mode == .Default {
       if let stroke = strokeCapture.update(touches.events) {
+        scriptLoader.onStrokeEnd(stroke)
         canvas.addStroke(stroke)
       }
     }
