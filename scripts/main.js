@@ -1,16 +1,7 @@
-function onStrokeEnd(points) {
-  console.log('-' + points[0]);
-  console.log(points.length);
-  console.log('got a stroke!');
-}
-
-function onCanvasElementAdded(element) {
-  console.log('element added');
-  for (const k in element) {
-    console.log(`${k}: ${element[k]}`);
+habitat.registerCanvasObserver({
+  clusterDragged(cluster, [dx, dy]) {
+    //    habitat.moveCluster(cluster, [Math.round(dx / 50) * 50, Math.round(dy / 50) * 50]);
+    //    return false; // Prevents the default handler from running
+    return false;
   }
-}
-
-function onCanvasElementRemoved(element) {
-  console.log('element removed');
-}
+});

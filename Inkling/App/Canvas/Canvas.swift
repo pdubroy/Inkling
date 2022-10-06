@@ -143,18 +143,18 @@ class Canvas {
 
   func notifyObservers(elementAdded element: CanvasElement) {
     observers.forEach({ observer in
-      observer.elementAdded(element)
+      observer.elementAdded(element, toCanvas: self)
     })
   }
 
   func notifyObservers(elementRemoved element: CanvasElement) {
     observers.forEach({ observer in
-      observer.elementRemoved(element)
+      observer.elementRemoved(element, fromCanvas: self)
     })
   }
 }
 
 protocol CanvasObserver: AnyObject {
-  func elementAdded(_ element: CanvasElement)
-  func elementRemoved(_ element: CanvasElement)
+  func elementAdded(_ element: CanvasElement, toCanvas canvas: Canvas)
+  func elementRemoved(_ element: CanvasElement, fromCanvas canvas: Canvas)
 }
